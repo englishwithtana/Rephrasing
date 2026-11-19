@@ -129,7 +129,7 @@
                 </button>
             </div>
             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                Tu progreso, borradores escritos y estadísticas se guardan automáticamente de forma permanente en este navegador mediante almacenamiento local multicapa (<code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded">localStorage</code> + <code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded">IndexedDB</code>).
+                Tu progreso, borradores escritos y estadísticas se guardan automáticamente en este dispositivo (almacenamiento local multicapa: <code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded">localStorage</code> + <code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded">IndexedDB</code>).
             </p>
             <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-5 space-y-3">
                 <div class="flex items-center justify-between text-xs">
@@ -141,6 +141,8 @@
                     <span id="backup-summary-count" class="font-bold text-slate-900">0 / 478</span>
                 </div>
             </div>
+
+            <div id="sync-section" class="rounded-xl p-4 border border-indigo-200 bg-indigo-50 mb-5"></div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                 <button onclick="app.exportProgressJSON()" class="px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-2">
@@ -6337,6 +6339,27 @@
                 });
             }
 
+            // Guardado de metadatos sueltos (p. ej. código de sincronización) en IndexedDB
+            putRaw(key, value) {
+                if (!this.db) return;
+                try {
+                    const tx = this.db.transaction(this.storeName, 'readwrite');
+                    tx.objectStore(this.storeName).put(value, key);
+                } catch (e) {}
+            }
+
+            async getRaw(key) {
+                try { if (this.dbReady) await this.dbReady; } catch (e) {}
+                if (!this.db) return null;
+                return new Promise((resolve) => {
+                    try {
+                        const req = this.db.transaction(this.storeName, 'readonly').objectStore(this.storeName).get(key);
+                        req.onsuccess = () => resolve(req.result || null);
+                        req.onerror = () => resolve(null);
+                    } catch (e) { resolve(null); }
+                });
+            }
+
             // Guardado multicapa instantáneo
             saveAll(stateObj) {
                 stateObj.lastSavedAt = new Date().toISOString();
@@ -6367,6 +6390,203 @@
 
         /**
          * =========================================================================
+         * 3b. SINCRONIZACIÓN EN LA NUBE CON CÓDIGO PERSONAL
+         * El progreso se guarda también en el servidor bajo un código del alumno.
+         * Así sobrevive al borrado de caché y se comparte entre móvil, iPad, etc.
+         * =========================================================================
+         */
+        const SYNC_API_URL = 'https://rephrasing-sync-api.vercel.app/api/progress';
+
+        class CloudSync {
+            constructor(app) {
+                this.app = app;
+                this.metaKey = 'selectividad_rephrasing_sync_meta_v1';
+                this.meta = this.loadMeta();
+                this.status = this.meta.code ? 'pending' : 'off'; // off | pending | syncing | ok | error
+                this.pushTimer = null;
+                this.busy = false;
+            }
+
+            loadMeta() {
+                try {
+                    const raw = localStorage.getItem(this.metaKey);
+                    if (raw) return Object.assign({ code: null, version: 0, dirty: false }, JSON.parse(raw));
+                } catch (e) {}
+                return { code: null, version: 0, dirty: false };
+            }
+
+            saveMeta() {
+                try { localStorage.setItem(this.metaKey, JSON.stringify(this.meta)); } catch (e) {}
+                this.app.storage.putRaw(this.metaKey, this.meta);
+            }
+
+            // Si el navegador borró localStorage pero IndexedDB conserva el código, lo recupera
+            async recoverMeta() {
+                if (this.meta.code) return;
+                const m = await this.app.storage.getRaw(this.metaKey);
+                if (m && m.code) {
+                    this.meta = Object.assign({ code: null, version: 0, dirty: false }, m, { version: 0, dirty: true });
+                    this.status = 'pending';
+                    this.saveMeta();
+                }
+            }
+
+            get enabled() { return !!this.meta.code; }
+
+            async api(method, url, body) {
+                const res = await fetch(url, {
+                    method,
+                    headers: body ? { 'Content-Type': 'application/json' } : undefined,
+                    body: body ? JSON.stringify(body) : undefined,
+                    cache: 'no-store'
+                });
+                let json = null;
+                try { json = await res.json(); } catch (e) {}
+                return { status: res.status, json: json || {} };
+            }
+
+            // Combina dos estados sin perder nada de ninguno
+            merge(a, b) {
+                const def = this.app.storage.getDefaultState();
+                const out = this.app.storage.mergeWithDefault(JSON.parse(JSON.stringify(def)));
+                const newer = (a.lastSavedAt || '') >= (b.lastSavedAt || '') ? a : b;
+                const older = newer === a ? b : a;
+                ['completed', 'failed', 'revealed', 'globalCompleted', 'globalFailed', 'globalRevealed'].forEach(k => {
+                    out[k] = Object.assign({}, older[k] || {}, newer[k] || {});
+                });
+                ['userInputs', 'globalInputs'].forEach(k => {
+                    out[k] = Object.assign({}, older[k] || {}, newer[k] || {});
+                });
+                // Lo dominado gana sobre lo fallado
+                [['completed', 'failed'], ['globalCompleted', 'globalFailed']].forEach(([c, f]) => {
+                    Object.keys(out[c]).forEach(id => { delete out[f][id]; });
+                });
+                out.uiState = Object.assign({}, def.uiState, newer.uiState || {});
+                out.lastSavedAt = new Date().toISOString();
+                return out;
+            }
+
+            adopt(state) {
+                this.app.progress = this.app.storage.mergeWithDefault(state);
+                this.app.storage.saveAll(this.app.progress);
+            }
+
+            markDirty() {
+                if (!this.enabled) return;
+                this.meta.dirty = true;
+                this.saveMeta();
+                this.status = 'pending';
+                clearTimeout(this.pushTimer);
+                this.pushTimer = setTimeout(() => this.sync(), 1500);
+                this.app.updateSaveIndicator();
+            }
+
+            // Crea un código nuevo con el progreso actual
+            async create() {
+                const r = await this.api('POST', SYNC_API_URL + '', { action: 'create', data: this.app.progress });
+                if (!r.json.code) throw new Error('No se pudo crear el código');
+                this.meta = { code: r.json.code, version: r.json.version || 1, dirty: false };
+                this.saveMeta();
+                this.status = 'ok';
+                return r.json.code;
+            }
+
+            // Conecta con un código existente y combina con lo que haya en este dispositivo
+            async connect(codeInput) {
+                const code = String(codeInput || '').trim().toUpperCase().replace(/[\s_]+/g, '-');
+                const r = await this.api('GET', SYNC_API_URL + '?code=' + encodeURIComponent(code));
+                if (r.status === 400) throw new Error('El código no tiene el formato correcto (ejemplo: K7M2-9QXA-4TNB).');
+                if (r.status === 404) throw new Error('Ese código no existe. Revísalo o crea uno nuevo.');
+                if (r.status !== 200) throw new Error('No se pudo conectar. Comprueba tu conexión.');
+                const remote = this.app.storage.mergeWithDefault(r.json.data);
+                const merged = this.merge(this.app.progress, remote);
+                this.meta = { code, version: r.json.version, dirty: true };
+                this.saveMeta();
+                this.adopt(merged);
+                await this.sync();
+            }
+
+            disconnect() {
+                clearTimeout(this.pushTimer);
+                this.meta = { code: null, version: 0, dirty: false };
+                this.saveMeta();
+                this.status = 'off';
+            }
+
+            // Baja los cambios del servidor y sube los locales (con una sola operación segura)
+            async sync() {
+                if (!this.enabled || this.busy) return;
+                if (navigator.onLine === false) { this.status = 'error'; this.app.updateSaveIndicator(); return; }
+                this.busy = true;
+                this.status = 'syncing';
+                this.app.updateSaveIndicator();
+                try {
+                    let changedLocal = false;
+                    for (let attempt = 0; attempt < 3; attempt++) {
+                        const g = await this.api('GET', SYNC_API_URL + '?code=' + encodeURIComponent(this.meta.code));
+                        if (g.status === 404) { this.status = 'error'; this.lastError = 'not_found'; break; }
+                        if (g.status !== 200) throw new Error('get');
+                        const remote = this.app.storage.mergeWithDefault(g.json.data);
+                        if (g.json.version !== this.meta.version) {
+                            if (this.meta.dirty) {
+                                this.adopt(this.merge(this.app.progress, remote));
+                            } else {
+                                this.adopt(remote);
+                            }
+                            this.meta.version = g.json.version;
+                            changedLocal = true;
+                            this.saveMeta();
+                        }
+                        if (!this.meta.dirty) { this.status = 'ok'; break; }
+                        const p = await this.api('PUT', SYNC_API_URL + '', {
+                            code: this.meta.code,
+                            baseVersion: this.meta.version,
+                            data: this.app.progress
+                        });
+                        if (p.status === 200 && p.json.ok) {
+                            this.meta.version = p.json.version;
+                            this.meta.dirty = false;
+                            this.saveMeta();
+                            this.status = 'ok';
+                            break;
+                        }
+                        if (p.status === 409) continue; // alguien guardó entre medias: volver a combinar
+                        throw new Error('put');
+                    }
+                    if (changedLocal) this.app.onRemoteChange();
+                } catch (e) {
+                    this.status = 'error';
+                } finally {
+                    this.busy = false;
+                    this.app.updateSaveIndicator();
+                    if (this.app.refreshSyncSection) this.app.refreshSyncSection();
+                }
+            }
+
+            // Envío de último momento al cerrar la pestaña
+            flush() {
+                if (!this.enabled || !this.meta.dirty) return;
+                try {
+                    fetch(SYNC_API_URL + '', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ code: this.meta.code, baseVersion: this.meta.version, data: this.app.progress }),
+                        keepalive: true
+                    });
+                } catch (e) {}
+            }
+
+            label() {
+                if (!this.enabled) return '';
+                if (this.status === 'ok') return ' · ☁ sincronizado';
+                if (this.status === 'syncing') return ' · ☁ sincronizando…';
+                if (this.status === 'error') return ' · ☁ pendiente';
+                return ' · ☁ …';
+            }
+        }
+
+        /**
+         * =========================================================================
          * 4. LÓGICA PRINCIPAL DE LA APLICACIÓN
          * =========================================================================
          */
@@ -6392,24 +6612,59 @@
                 this.examAnswers = {};
                 this.examSubmitted = false;
 
+                this.sync = new CloudSync(this);
+
+                // Pedir al navegador que NO borre estos datos (caché, falta de espacio, etc.)
+                this.requestPersistentStorage();
+
                 // Inicializar IndexedDB y sincronizar si tiene respaldo más reciente
-                this.storage.initIndexedDB((idbData) => {
-                    const localCount = Object.keys(this.progress.completed).length + Object.keys(this.progress.globalCompleted).length;
-                    const idbCount = Object.keys(idbData.completed).length + Object.keys(idbData.globalCompleted).length;
-                    if (idbCount > localCount) {
-                        this.progress = idbData;
+                this.storage.dbReady = this.storage.initIndexedDB((idbData) => {
+                    const newerIdb = (idbData.lastSavedAt || '') > (this.progress.lastSavedAt || '');
+                    const localCount = Object.keys(this.progress.completed).length + Object.keys(this.progress.globalCompleted).length + Object.keys(this.progress.userInputs).length;
+                    const idbCount = Object.keys(idbData.completed).length + Object.keys(idbData.globalCompleted).length + Object.keys(idbData.userInputs).length;
+                    if (newerIdb || idbCount > localCount) {
+                        this.progress = this.sync.merge(this.progress, idbData);
+                        this.storage.saveAll(this.progress);
                         this.render();
                     }
                 });
 
+                // Recuperar el código si el navegador borró localStorage, y sincronizar
+                this.storage.dbReady.then(async () => {
+                    await this.sync.recoverMeta();
+                    this.sync.sync();
+                });
+
+                // Sincronizar al volver a la app (p. ej. al pasar del móvil al iPad) y al recuperar conexión
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'visible') this.sync.sync();
+                    else this.sync.flush();
+                });
+                window.addEventListener('online', () => this.sync.sync());
+
                 // Guardado preventivo antes de cerrar pestaña o cambiar de página
-                window.addEventListener('beforeunload', () => this.persistNow());
-                window.addEventListener('pagehide', () => this.persistNow());
+                window.addEventListener('beforeunload', () => { this.persistNow(true); this.sync.flush(); });
+                window.addEventListener('pagehide', () => { this.persistNow(true); this.sync.flush(); });
 
                 this.render();
             }
 
-            persistNow() {
+            async requestPersistentStorage() {
+                try {
+                    if (navigator.storage && navigator.storage.persist) {
+                        await navigator.storage.persist();
+                    }
+                } catch (e) {}
+            }
+
+            // Se llama cuando llegan cambios de otro dispositivo
+            onRemoteChange() {
+                const ui = this.progress.uiState || {};
+                this.render();
+                this.updateHeaderStats();
+            }
+
+            persistNow(skipSync) {
                 this.progress.uiState = {
                     currentView: this.currentView === 'exam' ? 'dashboard' : this.currentView,
                     activeSectionId: this.activeSectionId,
@@ -6419,6 +6674,7 @@
                     globalMode: this.globalMode
                 };
                 this.storage.saveAll(this.progress);
+                if (!skipSync) this.sync.markDirty();
                 this.updateSaveIndicator();
                 this.updateHeaderStats();
             }
@@ -6429,7 +6685,7 @@
                 const now = new Date();
                 const hh = String(now.getHours()).padStart(2, '0');
                 const mm = String(now.getMinutes()).padStart(2, '0');
-                el.textContent = `Guardado · ${hh}:${mm}`;
+                el.textContent = `Guardado · ${hh}:${mm}` + (this.sync ? this.sync.label() : '');
             }
 
             // Guardado silencioso de borradores mientras el usuario escribe
@@ -6928,7 +7184,107 @@
             // =====================================================================
             // COPIA DE SEGURIDAD (.JSON) Y REINICIOS PROTEGIDOS
             // =====================================================================
+            refreshSyncSection() {
+                const el = document.getElementById('sync-section');
+                if (!el) return;
+                const sy = this.sync;
+                if (sy.enabled) {
+                    const stateTxt = sy.status === 'ok' ? '✓ Sincronizado' : sy.status === 'syncing' ? 'Sincronizando…' : sy.status === 'error' ? 'Pendiente (sin conexión). Se enviará solo al volver.' : 'Pendiente de enviar';
+                    el.innerHTML = `
+                        <div class="text-xs font-bold text-indigo-900 mb-1">☁ Sincronización entre dispositivos</div>
+                        <p class="text-xs text-indigo-900/80 leading-relaxed mb-3">Tu progreso está guardado en la nube con este código. Escríbelo en tu móvil, iPad u ordenador para ver lo mismo en todos. <b>Apúntalo en un sitio seguro.</b></p>
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex-1 text-center font-mono text-lg sm:text-xl font-extrabold tracking-wider bg-white border border-indigo-200 rounded-xl py-2.5 select-all">${sy.meta.code}</div>
+                            <button onclick="app.copySyncCode()" class="px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold">Copiar</button>
+                        </div>
+                        <div class="flex items-center justify-between text-[11px] font-semibold text-indigo-900/80">
+                            <span id="sync-state-text">${stateTxt}</span>
+                            <span class="flex gap-3">
+                                <button onclick="app.syncNow()" class="underline">Sincronizar ahora</button>
+                                <button onclick="app.syncDisconnect()" class="underline text-rose-600">Desconectar</button>
+                            </span>
+                        </div>
+                        ${sy.lastError === 'not_found' ? '<p class="text-[11px] text-rose-700 font-semibold mt-2">No se encuentra este código en el servidor. Pulsa Desconectar y crea uno nuevo.</p>' : ''}`;
+                } else {
+                    el.innerHTML = `
+                        <div class="text-xs font-bold text-indigo-900 mb-1">☁ Sincronización entre dispositivos</div>
+                        <p class="text-xs text-indigo-900/80 leading-relaxed mb-3">Activa tu código personal para no perder nunca tu progreso (aunque borres la caché) y usar la app en varios dispositivos.</p>
+                        <button onclick="app.syncCreate()" class="w-full px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm mb-3">Crear mi código</button>
+                        <div class="text-[11px] font-semibold text-indigo-900/80 mb-1">¿Ya tienes código? Escríbelo aquí:</div>
+                        <div class="flex gap-2">
+                            <input id="sync-code-input" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="XXXX-XXXX-XXXX" class="flex-1 min-w-0 font-mono uppercase tracking-wider border border-indigo-200 rounded-xl px-3 py-2.5 text-sm bg-white">
+                            <button onclick="app.syncConnect()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold">Conectar</button>
+                        </div>`;
+                }
+                const note = document.getElementById('sync-feedback');
+                if (note) note.remove();
+            }
+
+            syncFeedback(msg, ok) {
+                const el = document.getElementById('sync-section');
+                if (!el) return;
+                const old = document.getElementById('sync-feedback');
+                if (old) old.remove();
+                const d = document.createElement('div');
+                d.id = 'sync-feedback';
+                d.className = 'text-xs font-semibold p-2.5 rounded-xl mt-3 border ' + (ok ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-rose-50 text-rose-800 border-rose-200');
+                d.textContent = msg;
+                el.appendChild(d);
+            }
+
+            async syncCreate() {
+                try {
+                    this.syncFeedback('Creando tu código…', true);
+                    await this.sync.create();
+                    this.refreshSyncSection();
+                    this.updateSaveIndicator();
+                } catch (e) {
+                    this.syncFeedback('No se pudo crear el código. Comprueba tu conexión e inténtalo de nuevo.', false);
+                }
+            }
+
+            async syncConnect() {
+                const input = document.getElementById('sync-code-input');
+                try {
+                    this.syncFeedback('Conectando…', true);
+                    await this.sync.connect(input ? input.value : '');
+                    this.refreshSyncSection();
+                    const global = this.getGlobalStats();
+                    document.getElementById('backup-summary-count').textContent = `${global.completed} / ${global.total} ejercicios (${global.percentage}%)`;
+                    this.render();
+                } catch (e) {
+                    this.syncFeedback(e.message || 'No se pudo conectar.', false);
+                }
+            }
+
+            async syncNow() {
+                this.sync.lastError = null;
+                this.sync.meta.dirty = true;
+                this.sync.saveMeta();
+                await this.sync.sync();
+                this.refreshSyncSection();
+            }
+
+            syncDisconnect() {
+                this.openModal(
+                    'Desconectar este dispositivo',
+                    'Tu progreso seguirá guardado en este dispositivo y en la nube con tu código. Podrás volver a conectarte cuando quieras.',
+                    () => { this.sync.disconnect(); this.closeModal(); this.refreshSyncSection(); this.updateSaveIndicator(); },
+                    false
+                );
+            }
+
+            async copySyncCode() {
+                try {
+                    await navigator.clipboard.writeText(this.sync.meta.code);
+                    this.syncFeedback('Código copiado.', true);
+                } catch (e) {
+                    this.syncFeedback('Mantén pulsado el código para copiarlo.', true);
+                }
+            }
+
             openBackupModal() {
+                this.refreshSyncSection();
                 const global = this.getGlobalStats();
                 document.getElementById('backup-summary-count').textContent = `${global.completed} / ${global.total} ejercicios (${global.percentage}%)`;
                 const fb = document.getElementById('backup-feedback');
