@@ -2,7 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Rephrasing Master">
     <title>Rephrasing Master PAU/EBAU · 2º Bachillerato</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +26,24 @@
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+        body { min-height: 100vh; min-height: 100dvh; overflow-x: hidden; overflow-wrap: break-word; padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); padding-bottom: env(safe-area-inset-bottom); }
+        button, a, label, select, input, textarea { touch-action: manipulation; }
+        /* Cabecera: respetar la zona segura (notch / barra de estado en iPhone e iPad) */
+        header.sticky { padding-top: env(safe-area-inset-top); }
+        /* Evita el zoom automático de iOS/iPadOS al enfocar un campo de texto (requiere >= 16px) */
+        @media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+            input[type="text"], input:not([type]), textarea, select { font-size: 16px !important; }
+        }
+        /* Los modales nunca deben salirse de la pantalla: scroll interno si no caben */
+        .fixed.inset-0 > div { max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        /* Zonas táctiles más cómodas en tablets y móviles */
+        @media (pointer: coarse) {
+            main button { min-height: 40px; }
+        }
+        /* Textos preformateados y fórmulas largas no deben ensanchar la página */
+        pre, code { white-space: pre-wrap; word-break: break-word; }
+        img, svg, video { max-width: 100%; }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -31,40 +54,40 @@
 
     <!-- Cabecera Sticky -->
     <header class="bg-white/95 backdrop-blur-xs border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
+        <div class="max-w-6xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
             <!-- Marca y volver al inicio -->
-            <button onclick="app.goHome()" class="flex items-center gap-2.5 text-left group focus:outline-none shrink-0">
+            <button onclick="app.goHome()" aria-label="Ir al inicio" class="flex items-center gap-2.5 text-left group focus:outline-none shrink-0">
                 <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-extrabold text-base sm:text-lg shadow-xs group-hover:bg-indigo-700 transition">
                     R
                 </div>
-                <div>
+                <div class="hidden sm:block">
                     <div class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight tracking-tight">Rephrasing Master</div>
                     <div class="text-[11px] font-semibold text-indigo-600">PAU / EBAU · 2º Bachillerato</div>
                 </div>
             </button>
 
             <!-- Controles globales y estado de persistencia -->
-            <div class="flex items-center gap-1.5 sm:gap-2.5">
+            <div class="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
                 <!-- Indicador de autoguardado permanente -->
                 <button onclick="app.openBackupModal()" title="Gestionar copia de seguridad (.json)" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold transition">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="save-status-text">Guardado</span>
+                    <span id="save-status-text" class="hidden min-[400px]:inline whitespace-nowrap">Guardado</span>
                 </button>
 
                 <!-- Progreso global -->
                 <div class="hidden xl:flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 border border-slate-200">
-                    <span id="header-progress-text">0 / 215 dominados</span>
+                    <span id="header-progress-text">0 / 478 dominados</span>
                 </div>
 
                 <!-- Acceso directo Práctica Global 158 -->
-                <button onclick="app.openGlobalPractice()" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3 sm:px-3.5 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5">
+                <button onclick="app.openGlobalPractice()" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-semibold text-xs sm:text-sm px-2.5 sm:px-3.5 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5 whitespace-nowrap">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     <span class="hidden md:inline">Práctica Global (158)</span>
-                    <span class="md:hidden">Global (158)</span>
+                    <span class="md:hidden">Global</span>
                 </button>
 
                 <!-- Acceso directo Simulacro Rápido 10 -->
-                <button onclick="app.startRandomExam()" class="bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3 sm:px-3.5 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5">
+                <button onclick="app.startRandomExam()" class="bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-semibold text-xs sm:text-sm px-2.5 sm:px-3.5 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5 whitespace-nowrap">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     <span class="hidden sm:inline">Simulacro (10)</span>
                     <span class="sm:hidden">Test</span>
@@ -115,7 +138,7 @@
                 </div>
                 <div class="flex items-center justify-between text-xs">
                     <span class="font-semibold text-slate-600">Ejercicios dominados:</span>
-                    <span id="backup-summary-count" class="font-bold text-slate-900">0 / 215</span>
+                    <span id="backup-summary-count" class="font-bold text-slate-900">0 / 478</span>
                 </div>
             </div>
 
@@ -140,7 +163,7 @@
     <!-- Pie de página -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <p>Rephrasing Master PAU/EBAU · Entrenamiento gramatical completo para 2º de Bachillerato (215 ejercicios)</p>
+            <p>Rephrasing Master PAU/EBAU · Entrenamiento gramatical completo para 2º de Bachillerato (478 ejercicios)</p>
             <div class="flex items-center gap-4">
                 <button onclick="app.openBackupModal()" class="text-indigo-600 hover:text-indigo-800 font-semibold">Copia de seguridad (.json)</button>
                 <button onclick="app.confirmResetAll()" class="text-rose-500 hover:text-rose-700 font-semibold underline">Borrar progreso</button>
@@ -7396,7 +7419,7 @@
                                             value="${savedVal.replace(/"/g, '&quot;')}"
                                             oninput="app.saveDraftInput('section', '${ex.id}', this.value)"
                                             onkeydown="if(event.key === 'Enter') app.checkExercise('${sec.id}', '${ex.id}')"
-                                            placeholder="Escribe aquí la oración completa transformada..."
+                                            placeholder="Escribe aquí la oración completa..."
                                             class="flex-1 px-4 py-3 rounded-xl border border-slate-300 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition"
                                             autocomplete="off"
                                             spellcheck="false"
@@ -7641,7 +7664,7 @@
                                                 value="${savedVal.replace(/"/g, '&quot;')}"
                                                 oninput="app.saveDraftInput('global', '${ex.id}', this.value)"
                                                 onkeydown="if(event.key === 'Enter') app.checkGlobalExercise('${ex.id}')"
-                                                placeholder="Escribe aquí la oración completa transformada..."
+                                                placeholder="Escribe aquí la oración completa..."
                                                 class="flex-1 px-4 py-3 rounded-xl border border-slate-300 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition"
                                                 autocomplete="off"
                                                 spellcheck="false"
