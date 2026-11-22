@@ -99,107 +99,130 @@
         .shadow-xs{box-shadow:0 10px 30px -14px rgba(91,69,181,.22),0 1px 2px rgba(91,69,181,.06) !important}
         .shadow-md,.shadow-sm{box-shadow:0 16px 36px -16px rgba(91,69,181,.30) !important}
         .bg-white.rounded-2xl,.bg-white.rounded-3xl{border-color:#ebe6f8}
-        header.sticky { background:rgba(247,245,253,.80) !important; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(91,69,181,.10) !important; box-shadow:none !important; }
         .bg-slate-900{background-color:#2d2259 !important} .bg-slate-800{background-color:#3b2c78 !important} .hover\:bg-slate-800:hover,.hover\:bg-slate-700:hover{background-color:#4a3796 !important}
-        .bg-teal-600{background-color:#5b45b5 !important} .hover\:bg-teal-700:hover,.bg-teal-700{background-color:#4a3796 !important}
         .vi-banner { background:linear-gradient(115deg,#2d2259 0%,#4a3796 58%,#3b2c78 100%) !important; }
         ::-webkit-scrollbar-track{background:#f0ecfb} ::-webkit-scrollbar-thumb{background:#c3b6ee} ::-webkit-scrollbar-thumb:hover{background:#9a86e0}
-        /* Barra lateral flotante (escritorio / iPad horizontal) */
-        .vi-side{position:fixed;left:16px;top:50%;transform:translateY(-50%);width:64px;padding:14px 0;border-radius:32px;background:linear-gradient(180deg,#5b45b5,#4a3796);box-shadow:0 22px 44px -14px rgba(74,55,150,.60);display:none;flex-direction:column;align-items:center;gap:6px;z-index:40}
-        .vi-nav-btn{width:44px;height:44px;border-radius:9999px;display:grid;place-items:center;color:#cfc6f5;transition:background .2s,color .2s;position:relative}
-        .vi-nav-btn:hover{background:rgba(255,255,255,.13);color:#fff}
-        .vi-nav-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
-        .vi-nav-btn[aria-current=page]{background:rgba(255,255,255,.22);color:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.08)}
-        .vi-side hr{width:26px;border:0;border-top:1px solid rgba(255,255,255,.18);margin:6px 0}
-        .vi-bottom{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;align-items:center;padding:6px 6px;border-radius:26px;background:linear-gradient(180deg,#5b45b5,#4a3796);box-shadow:0 18px 40px -12px rgba(74,55,150,.6);z-index:40}
-        .vi-bottom .vi-nav-btn{width:auto;min-width:52px;height:48px;border-radius:18px;flex-direction:column;gap:2px;padding:0 8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600}
-        .vi-bottom .vi-nav-btn[aria-current=page]{box-shadow:none}
-        body{padding-bottom:calc(5.75rem + env(safe-area-inset-bottom)) !important}
-        @media (min-width:1024px){
-            .vi-side{display:flex} .vi-bottom{display:none}
-            body{padding-left:calc(6rem + env(safe-area-inset-left)) !important;padding-bottom:env(safe-area-inset-bottom) !important}
+        /* ===== Ventana flotante de 3 paneles (como la referencia) ===== */
+        :root { --indigo-rail:#4f4398; --lavender-bg:#faf9ff; --lavender-panel:#f3f1ff; --text-main:#181533; --text-muted:#6b6787; }
+        body { color:var(--text-main) !important; margin:0; padding:20px !important; min-height:100vh;
+               background-color:#6366f1 !important;
+               background-image: radial-gradient(circle at 8% 12%, rgba(45,212,191,.85) 0%, transparent 42%), radial-gradient(circle at 92% 88%, rgba(192,132,252,.85) 0%, transparent 45%), radial-gradient(circle at 15% 88%, rgba(244,114,182,.45) 0%, transparent 40%), linear-gradient(135deg,#14b8a6 0%,#3b82f6 35%,#6366f1 65%,#a855f7 100%) !important;
+               background-attachment: fixed; }
+        @media (max-width:768px){ body{ padding:10px 10px 84px 10px !important; } }
+        .app-shell{ position:relative; max-width:1380px; margin:0 auto; background:var(--lavender-bg); border-radius:32px; box-shadow:0 32px 70px -18px rgba(24,21,51,.34); overflow:hidden; min-height:calc(100vh - 40px); display:grid; grid-template-columns:92px minmax(0,1fr) 310px; }
+        @media (max-width:1180px){ .app-shell{ grid-template-columns:84px minmax(0,1fr); } .right-panel{ grid-column:1 / -1; border-radius:0 0 32px 32px; border-top:1px solid #e7e3fb; } }
+        @media (max-width:768px){ .app-shell{ grid-template-columns:1fr; border-radius:24px; min-height:auto; } }
+        .shell-wave-bg{ position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden; border-radius:32px; }
+        .left-rail-wrap{ position:relative; z-index:10; display:flex; align-items:center; justify-content:center; padding:24px 0 24px 18px; }
+        .left-rail{ background:linear-gradient(180deg,#5649a6 0%,#463a8c 100%); border-radius:34px; padding:18px 10px; display:flex; flex-direction:column; align-items:center; gap:14px; box-shadow:0 18px 36px -10px rgba(79,67,152,.55); position:sticky; top:32px; }
+        .rail-btn{ width:46px; height:46px; border-radius:16px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.72); transition:all .2s ease; cursor:pointer; border:none; background:transparent; position:relative; }
+        .rail-btn:hover{ color:#fff; background:rgba(255,255,255,.14); transform:translateY(-1px); }
+        .rail-btn:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+        .rail-btn[aria-current=page]{ background:rgba(255,255,255,.22); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),0 6px 14px rgba(24,21,51,.22); }
+        @media (max-width:768px){
+            .left-rail-wrap{ position:fixed; bottom:12px; left:12px; right:12px; padding:0; z-index:40; }
+            .left-rail{ flex-direction:row; justify-content:space-around; width:100%; padding:8px 12px; border-radius:24px; position:static; }
         }
-        /* Inicio: rejilla principal + panel derecho */
-        .dash-grid{display:grid;gap:1.5rem;grid-template-columns:minmax(0,1fr)}
-        .dash-panel{background:linear-gradient(180deg,#efeafd,#f6f3ff);border:1px solid #e3dcf6;border-radius:1.75rem;padding:1.25rem}
-        @media (min-width:1280px){
-            .dash-grid{grid-template-columns:minmax(0,1fr) 320px}
-            .dash-a{grid-column:1;grid-row:1} .dash-b{grid-column:1;grid-row:2}
-            .dash-panel{grid-column:2;grid-row:1 / span 2;position:sticky;top:5.25rem;align-self:start}
-        }
-        body[data-view=dashboard] #app-container{max-width:92rem}
-        .vi-card{background:#fff;border:1px solid #ebe6f8;border-radius:1.25rem;padding:1rem 1rem .25rem;box-shadow:0 10px 30px -14px rgba(91,69,181,.22);overflow:hidden}
-        .vi-card svg{display:block;width:calc(100% + 2rem);margin:.5rem -1rem 0;height:84px;max-width:none}
-        body[data-view=dashboard] header > div{max-width:92rem}
+        .dark-promo-card{ position:relative; overflow:hidden; border-radius:20px; padding:18px 20px; color:#fff; cursor:pointer; transition:transform .2s ease,box-shadow .2s ease; box-shadow:0 14px 28px -10px rgba(45,37,102,.45); text-align:left; width:100%; border:0; display:block; }
+        .dark-promo-card:hover{ transform:translateY(-3px); box-shadow:0 18px 34px -10px rgba(45,37,102,.6); }
+        .card-gradient-1{ background:linear-gradient(135deg,#272258 0%,#3d3584 55%,#1e293b 100%); }
+        .card-gradient-2{ background:linear-gradient(135deg,#353075 0%,#4f4398 55%,#2b356b 100%); }
+        .card-gradient-3{ background:linear-gradient(135deg,#1d3a63 0%,#2c4f9b 55%,#4f4398 100%); }
+        .tx-row{ background:#fff; border-radius:18px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; border:1px solid rgba(226,222,248,.8); box-shadow:0 8px 24px -12px rgba(79,67,152,.16); transition:all .2s ease; cursor:pointer; width:100%; text-align:left; }
+        .tx-row:hover{ transform:translateY(-2px); border-color:#c7befa; box-shadow:0 14px 30px -12px rgba(79,67,152,.26); }
+        .pill-switch{ display:inline-flex; align-items:center; gap:6px; background:#4f4398; color:#fff; padding:5px 7px 5px 12px; border-radius:999px; font-size:11px; font-weight:700; transition:background .2s ease; flex-shrink:0; }
+        .tx-row:hover .pill-switch{ background:#3d3282; }
+        .pill-switch-knob{ width:22px; height:22px; border-radius:999px; background:#fff; color:#4f4398; display:flex; align-items:center; justify-content:center; }
+        .metric-card{ background:#fff; border-radius:22px; padding:16px 16px 12px 16px; border:1px solid rgba(226,222,248,.8); box-shadow:0 10px 26px -12px rgba(79,67,152,.14); display:flex; flex-direction:column; justify-content:space-between; min-height:174px; transition:transform .2s ease; }
+        .metric-card:hover{ transform:translateY(-2px); }
+        .metric-card .chart{ height:64px; margin-top:.5rem; } .metric-card .chart svg{ display:block; width:100%; height:100%; max-width:none; }
+        .right-panel{ position:relative; z-index:5; background:var(--lavender-panel); padding:24px 20px; display:flex; flex-direction:column; justify-content:space-between; gap:20px; }
+        #app-container{ position:relative; z-index:10; }
+        .shell-main button.touch-tall{ min-height:0; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-indigo-100 selection:text-indigo-900">
+<body class="min-h-screen antialiased selection:bg-indigo-100 selection:text-indigo-900">
 
-    <!-- Navegación lateral (escritorio) y barra inferior (móvil / tablet vertical) -->
-    <nav class="vi-side" aria-label="Navegación principal">
-  <button type="button" class="vi-nav-btn" data-nav="home" title="Inicio" aria-label="Inicio" onclick="app.goHome()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/></svg></button>
-  <button type="button" class="vi-nav-btn" data-nav="rw" title="Reading y Writing" aria-label="Reading y Writing" onclick="app.rwOpenLibrary()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5v-16z"/><path d="M4 18.5A2.5 2.5 0 016.5 16H20"/><path d="M9 7.5h7M9 11h5"/></svg></button>
-  <button type="button" class="vi-nav-btn" data-nav="global" title="Práctica Global" aria-label="Práctica Global" onclick="app.openGlobalPractice()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg></button>
-  <button type="button" class="vi-nav-btn" data-nav="sim" title="Simulacro" aria-label="Simulacro" onclick="app.startRandomExam()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></button>
-<hr>
-  <button type="button" class="vi-nav-btn" data-nav="backup" title="Copia de seguridad" aria-label="Copia de seguridad" onclick="app.openBackupModal()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></button>
-</nav>
-    <nav class="vi-bottom" aria-label="Navegación principal">
-  <button type="button" class="vi-nav-btn" data-nav="home" aria-label="Inicio" onclick="app.goHome()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/></svg><span>Inicio</span></button>
-  <button type="button" class="vi-nav-btn" data-nav="rw" aria-label="Reading y Writing" onclick="app.rwOpenLibrary()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5v-16z"/><path d="M4 18.5A2.5 2.5 0 016.5 16H20"/><path d="M9 7.5h7M9 11h5"/></svg><span>R&W</span></button>
-  <button type="button" class="vi-nav-btn" data-nav="global" aria-label="Práctica Global" onclick="app.openGlobalPractice()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg><span>Global</span></button>
-  <button type="button" class="vi-nav-btn" data-nav="sim" aria-label="Simulacro" onclick="app.startRandomExam()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg><span>Test</span></button>
-  <button type="button" class="vi-nav-btn" data-nav="backup" aria-label="Copia de seguridad" onclick="app.openBackupModal()"><svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><span>Copia</span></button>
-</nav>
+    <!-- CONTENEDOR PRINCIPAL DE 3 PANELES -->
+    <div class="app-shell">
+      <div class="shell-wave-bg" aria-hidden="true">
+        <svg viewBox="0 0 1200 800" fill="none" class="w-full h-full opacity-50" preserveAspectRatio="none" style="max-width:none">
+          <path d="M-40 160 C 260 60, 420 340, 740 210 C 960 120, 1080 240, 1260 140 L 1260 0 L -40 0 Z" fill="url(#waveGrad1)" />
+          <path d="M-40 680 C 240 540, 520 790, 860 640 C 1020 570, 1120 650, 1260 580 L 1260 840 L -40 840 Z" fill="url(#waveGrad2)" />
+          <defs>
+            <linearGradient id="waveGrad1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ede9fe" stop-opacity="0.7" /><stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.2" /></linearGradient>
+            <linearGradient id="waveGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f3e8ff" stop-opacity="0.6" /><stop offset="100%" stop-color="#ccfbf1" stop-opacity="0.25" /></linearGradient>
+          </defs>
+        </svg>
+      </div>
 
-    <!-- Cabecera Sticky -->
-    <header class="bg-white/95 backdrop-blur-xs border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-        <div class="max-w-6xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
-            <!-- Marca y volver al inicio -->
-            <button onclick="app.goHome()" aria-label="Ir al inicio" class="flex items-center gap-2.5 text-left group focus:outline-none shrink-0">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-extrabold text-base sm:text-lg shadow-xs group-hover:bg-indigo-700 transition">
-                    R
-                </div>
-                <div class="hidden sm:block">
-                    <div class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight tracking-tight">Rephrasing Master</div>
-                    <div class="text-[11px] font-semibold text-indigo-600">PAU / EBAU · 2º Bachillerato</div>
-                </div>
-            </button>
+      <!-- 1. RAIL LATERAL IZQUIERDO FLOTANTE -->
+      <aside class="left-rail-wrap">
+        <nav class="left-rail" aria-label="Navegación principal">
+        <button type="button" class="rail-btn" data-nav="home" title="Inicio · Panel principal" aria-label="Inicio · Panel principal" onclick="app.goHome()"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5.5v-6.5h-5V21H4a1 1 0 01-1-1v-9.5z"/></svg></button>
+        <button type="button" class="rail-btn" data-nav="rw" title="Reading & Writing · Selectividad" aria-label="Reading & Writing · Selectividad" onclick="app.rwOpenLibrary()"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5v-16z"/><path d="M4 18.5A2.5 2.5 0 016.5 16H20"/><path d="M9 7.5h7M9 11h5"/></svg></button>
+        <button type="button" class="rail-btn" data-nav="global" title="Práctica Global (158 frases)" aria-label="Práctica Global (158 frases)" onclick="app.openGlobalPractice()"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2"/></svg></button>
+        <button type="button" class="rail-btn" data-nav="sim" title="Test Rápido Aleatorio (10 preguntas)" aria-label="Test Rápido Aleatorio (10 preguntas)" onclick="app.startRandomExam()"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></button>
+        <button type="button" class="rail-btn" data-nav="backup" title="Copia de seguridad y guardado" aria-label="Copia de seguridad y guardado" onclick="app.openBackupModal()"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 12l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></button>
+        </nav>
+      </aside>
 
-            <!-- Controles globales y estado de persistencia -->
-            <div class="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
-                <!-- Indicador de autoguardado permanente -->
-                <button onclick="app.openBackupModal()" title="Gestionar copia de seguridad (.json)" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold transition">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="save-status-text" class="hidden min-[400px]:inline whitespace-nowrap">Guardado</span>
-                </button>
-
-                <!-- Progreso global -->
-                <div class="hidden xl:flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 border border-slate-200">
-                    <span id="header-progress-text">0 / 478 dominados</span>
-                </div>
-
-                <!-- Acceso directo Práctica Global 158 -->
-                <button onclick="app.openGlobalPractice()" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-semibold text-xs sm:text-sm px-2.5 sm:px-3.5 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5 whitespace-nowrap">
-                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    <span class="hidden md:inline">Práctica Global (158)</span>
-                    <span class="md:hidden">Global</span>
-                </button>
-
-                <!-- Acceso directo Simulacro Rápido 10 -->
-                <button onclick="app.startRandomExam()" class="bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-semibold text-xs sm:text-sm px-2.5 sm:px-3.5 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5 whitespace-nowrap">
-                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span class="hidden sm:inline">Simulacro (10)</span>
-                    <span class="sm:hidden">Test</span>
-                </button>
+      <!-- 2. COLUMNA CENTRAL -->
+      <main class="shell-main relative z-10 p-5 sm:p-7 flex flex-col gap-6 min-w-0">
+        <header class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-[#181533]">¡Hola, Estudiante PAU!</h1>
+            <p class="text-xs text-[#6b6787] font-medium">Rephrasing Master · Inglés 2º de Bachillerato (EBAU / PAU)</p>
+          </div>
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <div class="bg-[#f3f1ff] border border-[#e3defa] px-3.5 py-2 rounded-2xl text-xs font-bold text-[#32286b] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#2dd4bf]"></span>
+              <span id="header-progress-text">0 / 478 dominados</span>
             </div>
-        </div>
-    </header>
+            <button type="button" onclick="app.openBackupModal()" title="Gestionar copia de seguridad (.json)" class="bg-[#4f4398] hover:bg-[#3f3482] text-white px-3.5 py-2 rounded-2xl text-xs font-bold shadow-sm transition flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span id="save-status-text" class="whitespace-nowrap">Guardado</span>
+            </button>
+          </div>
+        </header>
 
-    <!-- Contenedor Principal Dinámico -->
-    <main id="app-container" class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <!-- Renderizado dinámico -->
-    </main>
+        <!-- Contenedor dinámico de vistas -->
+        <div id="app-container" class="flex-1 min-w-0"></div>
+      </main>
+
+      <!-- 3. PANEL DERECHO -->
+      <aside class="right-panel" aria-label="Bloques gramaticales">
+        <div class="space-y-5">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="app.openBackupModal()" title="Almacenamiento permanente activo" class="w-10 h-10 rounded-2xl bg-white shadow-xs border border-[#e6e1fb] flex items-center justify-center text-[#4f4398] hover:bg-[#faf9ff] transition relative">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 4 3 8 3s8-1 8-3V7M4 7c0 2 4 3 8 3s8-1 8-3M4 7c0-2 4-3 8-3s8 1 8 3"/></svg>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-white absolute top-1.5 right-1.5"></span>
+              </button>
+              <button type="button" onclick="app.startRandomExam()" title="Lanzar Test Rápido (10)" class="w-10 h-10 rounded-2xl bg-white shadow-xs border border-[#e6e1fb] flex items-center justify-center text-[#4f4398] hover:bg-[#faf9ff] transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </button>
+            </div>
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#f472b6] to-[#6366f1] text-white font-extrabold text-xs flex items-center justify-center shadow-sm" title="2º de Bachillerato">2ºB</div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h2 class="text-lg font-extrabold text-[#181533] leading-tight">Bloques PAU</h2>
+                <p class="text-[11px] font-medium text-[#6b6787]">8 temas · 320 ejercicios</p>
+              </div>
+              <span id="right-blocks-pct" class="text-xs font-extrabold text-[#4f4398] bg-white px-2.5 py-1 rounded-xl border border-[#e6e1fb]">0%</span>
+            </div>
+            <div class="relative mt-2.5">
+              <svg class="w-4 h-4 text-[#8c87a8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
+              <input type="text" id="right-topic-search" oninput="app.renderRightPanel()" placeholder="Buscar bloque gramatical..." aria-label="Buscar bloque gramatical" class="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-[#e4dff9] text-xs font-medium text-[#181533] placeholder:text-[#9893b3] focus:outline-none focus:border-[#4f4398]" />
+            </div>
+          </div>
+          <div id="right-topics-list" class="space-y-2.5 max-h-[380px] overflow-y-auto pr-1"></div>
+        </div>
+        <div id="right-next-goal" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#eae6ff] via-[#e2dcff] to-[#d9e9ff] p-4 border border-[#dbd4fa]"></div>
+      </aside>
+    </div>
 
     <!-- Modal de Confirmación Genérico (Reinicio protegido) -->
     <div id="custom-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
@@ -23963,6 +23986,7 @@
                 this.updateSaveIndicator();
                 document.body.dataset.view = this.currentView;
                 this.updateNav();
+                this.renderRightPanel();
                 const container = document.getElementById('app-container');
                 if (this.currentView === 'dashboard') {
                     container.innerHTML = this.renderDashboard();
@@ -23981,7 +24005,7 @@
 
 
             // =====================================================================
-            // REDISEÑO: navegación lateral, panel derecho y tarjetas con gráficos
+            // DISEÑO DE 3 PANELES: navegación, panel derecho y panel de inicio
             // =====================================================================
             updateNav() {
                 const map = { dashboard: 'home', section: 'home', global_practice: 'global', exam: 'sim', rw_library: 'rw', rw_exam: 'rw' };
@@ -23990,6 +24014,22 @@
                     if (b.dataset.nav === active) b.setAttribute('aria-current', 'page');
                     else b.removeAttribute('aria-current');
                 });
+            }
+
+            // Icono y colores de cada bloque (misma paleta que la referencia)
+            viBlockMeta(i) {
+                const ic = d => `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+                const M = [
+                    { color: '#4f4398', bg: '#ede9fe', icon: ic('<path d="M17 4l3 3-3 3"/><path d="M20 7H8a4 4 0 00-4 4"/><path d="M7 20l-3-3 3-3"/><path d="M4 17h12a4 4 0 004-4"/>') },
+                    { color: '#14b8a6', bg: '#ccfbf1', icon: ic('<path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/><path d="M8.5 11.5h7M8.5 14.5h4"/>') },
+                    { color: '#10b981', bg: '#d1fae5', icon: ic('<path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/>') },
+                    { color: '#8b5cf6', bg: '#f3e8ff', icon: ic('<path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/>') },
+                    { color: '#ec4899', bg: '#fce7f3', icon: ic('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>') },
+                    { color: '#f59e0b', bg: '#fef3c7', icon: ic('<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>') },
+                    { color: '#6366f1', bg: '#e0e7ff', icon: ic('<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>') },
+                    { color: '#0ea5e9', bg: '#e0f2fe', icon: ic('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>') }
+                ];
+                return M[i % M.length];
             }
 
             viSmooth(pts) {
@@ -24005,50 +24045,49 @@
                 const n = vals.length;
                 return vals.map((v, i) => [n === 1 ? W / 2 : i * (W / (n - 1)), H - 8 - (Math.max(0, Math.min(v, max)) / max) * (H - 22)]);
             }
-            viArea(vals, max, color, gid) {
-                const W = 200, H = 88;
-                const v = vals.length >= 2 ? vals : [0, 0, 0, 0];
-                const pts = this.viPoints(v, max, W, H);
+            // Gráfico de área morada (los 8 bloques). Sin datos: forma decorativa atenuada.
+            viArea(vals, max, gid) {
+                const W = 150, H = 64;
+                const empty = !vals.some(v => v > 0);
+                const v = empty ? [10, 38, 22, 46, 30, 52] : vals;
+                const pts = this.viPoints(v, empty ? 60 : max, W, H);
                 const line = this.viSmooth(pts);
-                return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".95"/><stop offset="1" stop-color="${color}" stop-opacity=".55"/></linearGradient></defs><path d="${line} L${W},${H} L0,${H} Z" fill="url(#${gid})"/></svg>`;
+                return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"${empty ? ' opacity=".35"' : ''}><defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4f4398" stop-opacity="0.9"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0.35"/></linearGradient></defs><path d="${line} L${W},${H} L0,${H} Z" fill="url(#${gid})"/></svg>`;
             }
-            viLine(vals, max, color, gid) {
-                const W = 200, H = 88;
-                const has = vals.length >= 2;
-                const pts = this.viPoints(has ? vals : [0, 0, 0, 0], max, W, H);
+            // Línea turquesa suavizada con puntos
+            viLine(vals, max) {
+                const W = 150, H = 64;
+                const empty = vals.length < 2;
+                const v = empty ? [8, 22, 14, 34, 26, 44] : vals;
+                const pts = this.viPoints(v, empty ? 60 : max, W, H);
                 const line = this.viSmooth(pts);
-                const dots = has ? pts.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.6" fill="#fff" stroke="${color}" stroke-width="2.4"/>`).join('') : '';
-                return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".28"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs><path d="${line} L${W},${H} L0,${H} Z" fill="url(#${gid})"/><path d="${line}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"${has ? '' : ' stroke-dasharray="4 5" opacity=".5"'}/>${dots}</svg>`;
+                const dots = empty ? '' : pts.map((p, i) => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="#fff" stroke="${i % 2 ? '#38bdf8' : '#2dd4bf'}" stroke-width="2.5"/>`).join('');
+                return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"${empty ? ' opacity=".35"' : ''}><path d="${line}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>${dots}</svg>`;
             }
-            viBars(vals, max, c1, c2) {
-                const W = 200, H = 88, n = 10;
-                const shown = vals.slice(-n);
-                const bw = W / n;
+            // Barras redondeadas alternando morado y turquesa
+            viBars(vals, max) {
+                const W = 152, H = 64, n = 8;
+                const empty = !vals.length;
+                const shown = empty ? [28, 44, 20, 52, 34, 40, 24, 48] : vals.slice(-n);
                 let out = '';
                 for (let i = 0; i < n; i++) {
-                    const v = shown[i - (n - shown.length)];
-                    const has = i >= n - shown.length;
-                    const h = has ? Math.max(4, (Math.min(v, max) / max) * (H - 18)) : 6;
-                    out += `<rect x="${(i * bw + bw * 0.2).toFixed(1)}" y="${(H - 6 - h).toFixed(1)}" width="${(bw * 0.6).toFixed(1)}" height="${h.toFixed(1)}" rx="${(bw * 0.3).toFixed(1)}" fill="${has ? (i % 2 ? c1 : c2) : '#e6e0f5'}"/>`;
+                    const has = empty || i >= n - shown.length;
+                    const val = empty ? shown[i] : shown[i - (n - shown.length)];
+                    const h = has ? Math.max(10, Math.round((Math.min(val, empty ? 60 : max) / (empty ? 60 : max)) * 56)) : 10;
+                    out += `<rect x="${6 + i * 18}" y="${62 - h}" width="10" height="${h}" rx="5" fill="${!has ? '#e6e0f5' : (i % 2 === 0 ? '#4f4398' : '#5eead4')}"/>`;
                 }
-                return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${out}</svg>`;
+                return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true"${empty ? ' opacity=".35"' : ''}>${out}</svg>`;
             }
-            viDonut(segs, size, stroke, centerHtml) {
-                const r = 40, C = 2 * Math.PI * r;
-                const total = segs.reduce((a, b) => a + b.v, 0);
-                let off = 0, circles = `<circle cx="50" cy="50" r="${r}" fill="none" stroke="#e6e0f5" stroke-width="${stroke}"/>`;
-                if (total > 0) segs.forEach(sg => {
-                    if (sg.v <= 0) return;
-                    const len = (sg.v / total) * C;
-                    circles += `<circle cx="50" cy="50" r="${r}" fill="none" stroke="${sg.color}" stroke-width="${stroke}" stroke-dasharray="${len.toFixed(2)} ${(C - len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 50 50)"/>`;
-                    off += len;
-                });
-                return `<div class="relative" style="width:${size}px;height:${size}px"><svg viewBox="0 0 100 100" style="width:100%;height:100%;margin:0" aria-hidden="true">${circles}</svg><div class="absolute inset-0 flex flex-col items-center justify-center text-center">${centerHtml || ''}</div></div>`;
+            // Donut con degradado y porcentaje central
+            viDonut(pct, gid) {
+                const C = 175.93;
+                const fill = ((Math.max(0, Math.min(100, pct)) / 100) * C).toFixed(1);
+                return `<svg viewBox="0 0 80 80" style="width:80px;height:80px" aria-hidden="true"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4f4398"/><stop offset="100%" stop-color="#2dd4bf"/></linearGradient></defs><circle cx="40" cy="40" r="28" fill="none" stroke="#e9e5ff" stroke-width="11"/><circle cx="40" cy="40" r="28" fill="none" stroke="url(#${gid})" stroke-width="11" stroke-linecap="round" stroke-dasharray="${fill} ${C}" transform="rotate(-90 40 40)"/><text x="40" y="44" text-anchor="middle" font-size="13" font-weight="800" fill="#181533">${Math.round(pct)}%</text></svg>`;
             }
 
             getDashData() {
                 const global = this.getGlobalStats();
-                const blocks = CURRICULUM_DATA.map(sec => ({ sec, st: this.getSectionStats(sec) }));
+                const blocks = CURRICULUM_DATA.map((sec, i) => ({ sec, i, st: this.getSectionStats(sec), meta: this.viBlockMeta(i) }));
                 const rw = this.getRwStats();
                 const scores = [], grades = [];
                 RW_LIBRARY.forEach(exam => {
@@ -24061,206 +24100,191 @@
                 });
                 const byTime = (a, b) => String(a.t).localeCompare(String(b.t));
                 scores.sort(byTime); grades.sort(byTime);
-                const failed = Object.values(this.progress.failed || {}).filter(Boolean).length
-                             + Object.values(this.progress.globalFailed || {}).filter(Boolean).length;
-                return { global, blocks, rw, scores: scores.map(x => x.v).slice(-8), grades: grades.map(x => x.v).slice(-10), failed };
+                const blocksDone = blocks.reduce((a, b) => a + b.st.completedCount, 0);
+                const blocksTotal = blocks.reduce((a, b) => a + b.st.total, 0);
+                return { global, blocks, rw, blocksDone, blocksTotal, scores: scores.map(x => x.v).slice(-8), grades: grades.map(x => x.v).slice(-8) };
             }
 
-            renderDashSummary() {
-                const d = this.getDashData();
-                const P = '#5b45b5', C = '#7fdcec', L = '#cfc6f5';
-                const card = (label, big, unit, chart) => `
-                    <div class="vi-card">
-                        <div class="text-[13px] font-semibold text-slate-600">${label}</div>
-                        <div class="text-2xl sm:text-[28px] leading-tight font-extrabold text-slate-900 mt-0.5">${big}</div>
-                        <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wide truncate">${unit}</div>
-                        ${chart}
-                    </div>`;
-                const r = d.rw.reading, w = d.rw.writing;
-                const mean = r.mean === null ? '—' : String(r.mean).replace('.', ',');
-                const donut = this.viDonut([
-                    { v: r.aprobado, color: P }, { v: r.no_superado, color: '#f08aa0' }, { v: r.por_corregir, color: C }, { v: r.en_curso, color: '#f2c36b' }
-                ], 92, 13, `<span class="text-[11px] font-bold text-slate-500">${r.aprobado + r.no_superado + r.por_corregir + r.en_curso}<br>hechos</span>`);
-                return `
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" aria-label="Resumen de tu progreso">
-                        ${card('Rephrasing', d.global.completed, `de ${d.global.total} dominados`, this.viArea(d.blocks.map(b => b.st.percentage), 100, P, 'viG1'))}
-                        ${card('Reading', mean, 'nota media / 10', this.viLine(d.scores, 10, P, 'viG2'))}
-                        ${card('Writing', `${w.valorado}`, `de ${w.total} valoradas`, this.viBars(d.grades, 10, P, C))}
-                        <div class="vi-card">
-                            <div class="text-[13px] font-semibold text-slate-600">Estado Reading</div>
-                            <div class="text-2xl sm:text-[28px] leading-tight font-extrabold text-slate-900 mt-0.5">${r.aprobado}</div>
-                            <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wide truncate">aprobados de ${r.total}</div>
-                            <div class="flex justify-center py-3">${donut}</div>
-                        </div>
-                    </div>`;
+            toggleDashPending() {
+                this.dashPendingOnly = !this.dashPendingOnly;
+                this.render();
             }
 
-            renderDashPanel() {
+            // Panel derecho: lista de bloques + siguiente objetivo
+            renderRightPanel() {
+                const list = document.getElementById('right-topics-list');
+                if (!list) return;
                 const d = this.getDashData();
-                const h = new Date().getHours();
-                const greet = h < 6 ? 'Buenas noches' : h < 13 ? 'Buenos días' : h < 21 ? 'Buenas tardes' : 'Buenas noches';
-                const pending = d.blocks.filter(b => b.st.percentage < 100).sort((a, b) => a.st.percentage - b.st.percentage)[0];
-                const ico = p => `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
-                const row = (icon, title, sub, onclick) => `
-                    <button type="button" onclick="${onclick}" class="w-full flex items-center gap-3 text-left p-2.5 rounded-2xl hover:bg-white/80 transition">
-                        <span class="w-10 h-10 rounded-xl bg-white shadow-xs grid place-items-center text-indigo-600 shrink-0">${icon}</span>
-                        <span class="min-w-0"><span class="block text-sm font-bold text-slate-900 truncate">${title}</span><span class="block text-xs text-slate-500 truncate">${sub}</span></span>
-                    </button>`;
-                const failedFirst = d.blocks.find(b => b.st.failedCount > 0);
-                const rows = [
-                    failedFirst
-                        ? row(ico('<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/>'), 'Fallos por repasar', `${d.failed} ${d.failed === 1 ? 'ejercicio' : 'ejercicios'} · Bloque ${failedFirst.sec.number}`, `app.openSection('${failedFirst.sec.id}','practice');app.setFilter('failed')`)
-                        : row(ico('<path d="M5 12l5 5L20 7"/>'), 'Sin fallos pendientes', 'No tienes ejercicios por repasar', 'app.goHome()'),
-                    row(ico('<path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5v-16z"/><path d="M9 7.5h7M9 11h5"/>'), 'Reading', `${d.rw.reading.aprobado} aprobados · ${d.rw.reading.por_corregir} por corregir`, 'app.rwOpenLibrary()'),
-                    row(ico('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/>'), 'Writing', `${d.rw.writing.pendiente_valoracion} pendientes de valoración · ${d.rw.writing.valorado} valoradas`, 'app.rwOpenLibrary()')
-                ].join('');
-                const cta = pending
-                    ? `<div class="mt-5 rounded-2xl bg-white p-4 shadow-xs border border-[#e3dcf6]">
-                           <div class="text-[11px] font-bold uppercase tracking-wide text-indigo-600 mb-1">Siguiente paso</div>
-                           <div class="text-sm font-extrabold text-slate-900 leading-snug">Bloque ${pending.sec.number}: ${pending.sec.title}</div>
-                           <div class="text-xs text-slate-500 mt-0.5">Te quedan ${pending.st.total - pending.st.completedCount} ejercicios por dominar.</div>
-                           <button type="button" onclick="app.openSection('${pending.sec.id}','practice')" aria-label="Practicar el Bloque ${pending.sec.number}" class="mt-3 w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">Practicar <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-                       </div>`
-                    : `<div class="mt-5 rounded-2xl bg-white p-4 shadow-xs border border-[#e3dcf6] text-sm font-bold text-slate-900">Has dominado todos los bloques.</div>`;
-                const ring = this.viDonut([{ v: d.global.completed, color: '#5b45b5' }, { v: Math.max(0, d.global.total - d.global.completed), color: '#e6e0f5' }], 132, 11,
-                    `<span class="text-2xl font-extrabold text-slate-900">${d.global.percentage}%</span><span class="text-[11px] font-semibold text-slate-500">dominado</span>`);
-                return `
-                    <aside class="dash-panel" aria-label="Resumen del día">
-                        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">${greet}</h2>
-                        <p class="text-xs font-semibold text-slate-500 mt-0.5">Tu resumen de hoy</p>
-                        <div class="flex justify-center py-5">${ring}</div>
-                        <div class="space-y-1">${rows}</div>
-                        ${cta}
-                    </aside>`;
+                const q = ((document.getElementById('right-topic-search') || {}).value || '').trim().toLowerCase();
+                const pctEl = document.getElementById('right-blocks-pct');
+                if (pctEl) pctEl.textContent = Math.round((d.blocksDone / (d.blocksTotal || 1)) * 100) + '%';
+                const filtered = d.blocks.filter(b => !q || b.sec.title.toLowerCase().includes(q) || b.sec.subtitle.toLowerCase().includes(q));
+                list.innerHTML = filtered.length === 0
+                    ? '<div class="text-xs text-[#6b6787] text-center py-4">No se encontraron bloques.</div>'
+                    : filtered.map(b => {
+                        const cur = this.currentView === 'section' && this.activeSectionId === b.sec.id;
+                        const full = b.st.completedCount === b.st.total;
+                        return `
+                          <button type="button" onclick="app.openSection('${b.sec.id}','theory')" class="w-full flex items-center justify-between gap-2.5 p-2.5 rounded-2xl transition text-left ${cur ? 'bg-white shadow-sm ring-2 ring-[#4f4398]/30' : 'hover:bg-white/80'}">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                              <div class="w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 shadow-xs" style="background:${b.meta.bg}; color:${b.meta.color};">${b.meta.icon}</div>
+                              <div class="min-w-0">
+                                <div class="text-xs font-bold text-[#181533] truncate">${b.sec.title}</div>
+                                <div class="text-[11px] font-medium text-[#6b6787]">${b.st.completedCount} / ${b.st.total} dominadas</div>
+                              </div>
+                            </div>
+                            <span class="text-[11px] font-extrabold ${full ? 'text-emerald-600' : 'text-[#4f4398]'} shrink-0">${b.st.percentage}%</span>
+                          </button>`;
+                    }).join('');
+                const goal = document.getElementById('right-next-goal');
+                if (goal) {
+                    const next = d.blocks.find(b => b.st.completedCount < b.st.total) || d.blocks[0];
+                    const remaining = next.st.total - next.st.completedCount;
+                    goal.innerHTML = `
+                        <div class="relative z-10">
+                          <div class="w-9 h-9 rounded-2xl bg-white/80 text-[#4f4398] flex items-center justify-center mb-3 shadow-xs">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                          </div>
+                          <div class="text-[11px] font-bold uppercase tracking-wider text-[#4f4398] mb-0.5">Siguiente objetivo PAU</div>
+                          <div class="text-sm font-extrabold text-[#181533] leading-snug mb-1">${next.sec.title}</div>
+                          <p class="text-[11px] text-[#555075] mb-3">${remaining > 0 ? `Te faltan ${remaining} actividades para dominar este bloque.` : '¡Bloque al 100%! Repasa la Práctica Global.'}</p>
+                          <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-[#32286b]">${next.st.completedCount}/${next.st.total} completadas</span>
+                            <button type="button" onclick="app.openSection('${next.sec.id}','practice')" class="w-9 h-9 rounded-full bg-[#4f4398] hover:bg-[#3b307c] text-white flex items-center justify-center shadow-md transition" title="Ir al bloque recomendado" aria-label="Practicar ${next.sec.title}">
+                              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </button>
+                          </div>
+                        </div>`;
+                }
             }
 
             renderDashboard() {
-                const global = this.getGlobalStats();
-                const mixedStats = this.getGlobalMixedStats();
+                const d = this.getDashData();
+                const g = d.global;
+                const mixed = this.getGlobalMixedStats();
+                const rw = d.rw, r = rw.reading, w = rw.writing;
+                const pendingOnly = !!this.dashPendingOnly;
+                const visible = pendingOnly ? d.blocks.filter(b => b.st.completedCount < b.st.total) : d.blocks;
+                const mean = r.mean === null ? '—' : String(r.mean).replace('.', ',');
+                const mastery = (g.completed / (g.total || 1) * 10).toFixed(1);
 
-                const cardsHtml = CURRICULUM_DATA.map(sec => {
-                    const stats = this.getSectionStats(sec);
-                    return `
-                        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-3">
-                                    <span class="px-2.5 py-1 rounded-lg text-xs font-bold border ${sec.badgeBg}">
-                                        Bloque ${sec.number}
-                                    </span>
-                                    <span class="text-xs font-semibold text-slate-500">
-                                        ${stats.completedCount}/${stats.total} dominados
-                                    </span>
-                                </div>
-                                <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition mb-1.5">
-                                    ${sec.title}
-                                </h3>
-                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
-                                    ${sec.subtitle}
-                                </p>
+                const rows = visible.length === 0
+                    ? `<div class="bg-white rounded-2xl p-6 text-center text-xs font-semibold text-emerald-700 border border-emerald-200">Has completado todos los bloques gramaticales al 100%.</div>`
+                    : visible.map(b => `
+                        <button type="button" onclick="app.openSection('${b.sec.id}','theory')" class="tx-row" aria-label="Abrir bloque ${b.sec.number}: ${b.sec.title}">
+                          <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0" style="background:${b.meta.bg}; color:${b.meta.color};">${b.meta.icon}</div>
+                            <div class="min-w-0">
+                              <div class="text-sm font-bold text-[#181533] truncate">${b.sec.number}. ${b.sec.title}</div>
+                              <div class="text-[11px] text-[#6b6787] truncate">${b.sec.subtitle}</div>
                             </div>
-
-                            <div>
-                                <div class="mb-4">
-                                    <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <span class="text-slate-500">Dominio del bloque</span>
-                                        <span class="text-slate-800">${stats.percentage}%</span>
-                                    </div>
-                                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                                        <div class="h-full ${sec.accentBg} rounded-full transition-all duration-500" style="width: ${stats.percentage}%"></div>
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-2.5">
-                                    <button onclick="app.openSection('${sec.id}', 'theory')" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center justify-center gap-1.5">
-                                        <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                        <span>1. Cómo se hace</span>
-                                    </button>
-                                    <button onclick="app.openSection('${sec.id}', 'practice')" class="px-3 py-2.5 rounded-xl text-xs font-semibold ${sec.accentBg} ${sec.accentHover} text-white shadow-xs transition flex items-center justify-center gap-1.5">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                        <span>2. Practicar (${sec.exercises.length})</span>
-                                    </button>
-                                </div>
+                          </div>
+                          <div class="flex items-center gap-3 shrink-0">
+                            <div class="text-right hidden sm:block">
+                              <div class="text-xs font-extrabold text-[#181533]">${b.st.completedCount} / ${b.st.total}</div>
+                              <div class="text-[10px] font-semibold ${b.st.completedCount === b.st.total ? 'text-emerald-600' : 'text-[#6b6787]'}">${b.st.percentage}%</div>
                             </div>
+                            <span class="pill-switch"><span>Abrir</span><span class="pill-switch-knob">→</span></span>
+                          </div>
+                        </button>`).join('');
+
+                const metric = (label, big, unit, arrowCls, chart) => `
+                    <div class="metric-card">
+                      <div class="flex items-start justify-between">
+                        <div>
+                          <div class="text-[11px] font-semibold text-[#6b6787]">${label}</div>
+                          <div class="text-xl font-extrabold text-[#181533]">${big}<span class="text-xs font-semibold text-[#8c87a8]">${unit}</span></div>
                         </div>
-                    `;
-                }).join('');
+                        <span class="${arrowCls} text-xs font-bold" aria-hidden="true">↗</span>
+                      </div>
+                      ${chart}
+                    </div>`;
+                const approvedPct = r.total ? (r.aprobado / r.total) * 100 : 0;
 
                 return `
-                    <div class="fade-in dash-grid">
-                        <div class="dash-a">
-                        <!-- Hero Principal -->
-                        <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 mb-6 shadow-xs">
-                            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                                <div class="max-w-2xl">
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 mb-3">
-                                        Preparación EBAU / PAU · Inglés 2º Bachillerato
-                                    </span>
-                                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
-                                        Domina los Rephrasing de Selectividad paso a paso
-                                    </h2>
-                                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                                        Aprende el razonamiento exacto detrás de cada transformación en <strong>Cómo se hace</strong>, entrena con <strong>320 ejercicios organizados por bloques</strong> o ponte a prueba sin etiqueta previa en la <strong>Práctica Global PAU (158 mezcladas)</strong>.
-                                    </p>
-                                </div>
-
-                                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 min-w-[265px]">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Progreso Global</span>
-                                        <span class="text-lg font-extrabold text-indigo-600">${global.percentage}%</span>
-                                    </div>
-                                    <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden mb-2.5">
-                                        <div class="h-full bg-indigo-600 rounded-full transition-all duration-500" style="width: ${global.percentage}%"></div>
-                                    </div>
-                                    <p class="text-xs text-slate-600 font-medium">
-                                        Has dominado <strong class="text-slate-900">${global.completed}</strong> de <strong class="text-slate-900">${global.total}</strong> transformaciones.
-                                    </p>
-                                </div>
+                  <div class="space-y-6 fade-in">
+                    <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+                      <div class="xl:col-span-4 space-y-3.5">
+                        <button type="button" onclick="app.openGlobalPractice()" class="dark-promo-card card-gradient-1">
+                          <svg class="absolute -right-6 -top-6 w-36 h-36 opacity-30 pointer-events-none" viewBox="0 0 120 120" fill="none" style="max-width:none"><path d="M10 60 C 30 10, 90 10, 110 60 C 90 110, 30 110, 10 60 Z" fill="#38bdf8"/></svg>
+                          <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-3">
+                              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-white/15 text-teal-200">MODELO EXAMEN PAU</span>
+                              <span class="text-xs font-extrabold text-teal-300">${mixed.percentage}%</span>
                             </div>
-                        </div>
+                            <div class="text-base font-extrabold tracking-tight mb-0.5">Práctica Global PAU</div>
+                            <div class="text-xs text-indigo-200 mb-3.5">${mixed.total} Frases Mezcladas · Sin tema previo</div>
+                            <div class="w-full h-1.5 bg-white/15 rounded-full overflow-hidden mb-2"><div class="h-full bg-[#2dd4bf] rounded-full transition-all" style="width:${mixed.percentage}%"></div></div>
+                            <div class="flex items-center justify-between text-[11px] text-indigo-100 font-semibold"><span>${mixed.completedCount} / ${mixed.total} acertadas</span><span>Entrar →</span></div>
+                          </div>
+                        </button>
 
-                        ${this.renderDashSummary()}
-                        </div>
-                        ${this.renderDashPanel()}
-                        <div class="dash-b">
-                        <!-- Banner Destacado: Práctica Global PAU (158 Mezcladas) -->
-                        <div class="vi-banner rounded-3xl p-6 sm:p-7 mb-8 text-white shadow-md border border-indigo-900/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                            <div class="space-y-2 max-w-2xl">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-indigo-500/30 text-indigo-200 border border-indigo-400/30">
-                                        Entrenamiento Real Selectividad · Sin Etiqueta Previa
-                                    </span>
-                                    <span class="text-xs font-semibold text-emerald-300">
-                                        ${mixedStats.completedCount} / ${mixedStats.total} acertadas (${mixedStats.percentage}%)
-                                    </span>
-                                </div>
-                                <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight">
-                                    Práctica Global PAU (158 Mezcladas)
-                                </h3>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    Banco independiente de <strong>158 frases de examen mezcladas</strong> de todo el temario de 2º de Bachillerato. Identifica tú mismo la estructura antes de responder y descubre el tema, la solución estándar y las variantes válidas al corregir.
-                                </p>
+                        <button type="button" onclick="app.startRandomExam()" class="dark-promo-card card-gradient-2">
+                          <svg class="absolute -right-8 -bottom-8 w-36 h-36 opacity-25 pointer-events-none" viewBox="0 0 120 120" fill="none" style="max-width:none"><circle cx="60" cy="60" r="50" fill="#a78bfa"/></svg>
+                          <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-2.5">
+                              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-white/15 text-amber-200">SIMULACRO EXPRESS</span>
+                              <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             </div>
-                            <button onclick="app.openGlobalPractice()" class="w-full md:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-indigo-50 text-slate-900 font-extrabold text-sm shadow-sm transition flex items-center justify-center gap-2 shrink-0">
-                                <span>Practicar las 158 Mezcladas</span>
-                                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            </button>
-                        </div>
+                            <div class="text-base font-extrabold tracking-tight mb-0.5">Test Rápido Aleatorio</div>
+                            <div class="text-xs text-indigo-200 mb-3">10 preguntas al azar con nota sobre 10</div>
+                            <div class="flex items-center justify-between text-[11px] text-indigo-100 font-semibold"><span>8 bloques mezclados</span><span>Empezar →</span></div>
+                          </div>
+                        </button>
 
-                        ${this.renderRwBanner()}
+                        <button type="button" onclick="app.rwOpenLibrary()" class="dark-promo-card card-gradient-3">
+                          <svg class="absolute -right-6 -top-8 w-32 h-32 opacity-25 pointer-events-none" viewBox="0 0 120 120" fill="none" style="max-width:none"><circle cx="60" cy="60" r="50" fill="#2dd4bf"/></svg>
+                          <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-2.5">
+                              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-white/15 text-teal-200">EXÁMENES OFICIALES</span>
+                              <span class="text-xs font-extrabold text-teal-300">${r.aprobado}/${r.total}</span>
+                            </div>
+                            <div class="text-base font-extrabold tracking-tight mb-0.5">Reading &amp; Writing</div>
+                            <div class="text-xs text-indigo-200 mb-3">Selectividad Andalucía · ${RW_LIBRARY.length} exámenes</div>
+                            <div class="flex items-center justify-between text-[11px] text-indigo-100 font-semibold"><span>${r.aprobado} aprobados · ${w.valorado} valorados</span><span>Abrir →</span></div>
+                          </div>
+                        </button>
 
-                        <!-- Cabecera Bloques Gramaticales -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                            <h3 class="text-lg font-extrabold text-slate-900">Temario por Bloques Gramaticales (8 Bloques · 320 Ejercicios)</h3>
-                            <span class="text-xs font-medium text-slate-500">Cada bloque incluye teoría paso a paso + 40 ejercicios</span>
-                        </div>
+                        <button type="button" onclick="app.openBackupModal()" class="w-full py-4 px-4 rounded-2xl border-2 border-dashed border-[#cfc7f5] hover:border-[#4f4398] bg-[#f5f3ff]/70 hover:bg-white text-[#4f4398] font-bold text-xs transition flex items-center justify-center gap-2">
+                          <span class="text-base leading-none">+</span><span>Copia de Seguridad (.json)</span>
+                        </button>
+                      </div>
 
-                        <!-- Grid de 8 Bloques -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            ${cardsHtml}
+                      <div class="xl:col-span-8 min-w-0">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                          <div>
+                            <h2 class="text-base sm:text-lg font-extrabold text-[#181533]">Bloques Gramaticales PAU</h2>
+                            <p class="text-xs text-[#6b6787]">Guía paso a paso + 40 ejercicios reales por tema</p>
+                          </div>
+                          <button type="button" onclick="app.toggleDashPending()" class="px-3 py-1.5 rounded-xl text-xs font-bold border transition ${pendingOnly ? 'bg-[#4f4398] text-white border-[#4f4398]' : 'bg-white text-[#4f4398] border-[#e2dcf9] hover:bg-[#f3f1ff]'}">${pendingOnly ? 'Mostrando pendientes' : 'Ver solo pendientes'}</button>
                         </div>
+                        <div class="flex flex-wrap items-center gap-4 sm:gap-6 mb-4 bg-white/75 px-4 py-3 rounded-2xl border border-[#eae6ff]">
+                          <div>
+                            <div class="text-[11px] font-semibold text-[#6b6787]">Total dominadas</div>
+                            <div class="text-xl font-extrabold text-[#181533]">${g.completed} <span class="text-xs font-bold text-[#8c87a8]">/ ${g.total}</span></div>
+                          </div>
+                          <div class="h-7 w-px bg-[#e4dff9] hidden sm:block"></div>
+                          <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-600"><span>↑ ${d.blocksDone}</span><span class="text-[#6b6787] font-medium">en Bloques</span></div>
+                          <div class="flex items-center gap-1.5 text-xs font-bold text-rose-500"><span>↓ ${g.total - g.completed}</span><span class="text-[#6b6787] font-medium">Pendientes</span></div>
+                          <div class="ml-auto text-xs font-extrabold text-[#4f4398] bg-[#f3f1ff] px-2.5 py-1 rounded-xl">Dominio: ${mastery}/10</div>
                         </div>
+                        <div class="space-y-2.5 max-h-[340px] overflow-y-auto pr-1">${rows}</div>
+                      </div>
                     </div>
-                `;
+
+                    <div>
+                      <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm sm:text-base font-extrabold text-[#181533]">Resumen Rápido de tu Progreso</h3>
+                        <button type="button" onclick="app.rwOpenLibrary()" class="text-xs font-bold text-[#4f4398] hover:underline">Ver todo →</button>
+                      </div>
+                      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+                        ${metric('Rephrasing', g.completed, '/' + g.total, 'text-emerald-500', `<div class="chart">${this.viArea(d.blocks.map(b => b.st.percentage), 100, 'mGrad1')}</div>`)}
+                        ${metric('Reading', mean, '/10 media', 'text-teal-500', `<div class="chart">${this.viLine(d.scores, 10)}</div>`)}
+                        ${metric('Writing', w.valorado, '/' + w.total + ' valoradas', 'text-indigo-500', `<div class="chart">${this.viBars(d.grades, 10)}</div>`)}
+                        ${metric('Reading aprobado', r.aprobado, '/' + r.total, 'text-emerald-500', `<div class="flex items-center justify-center mt-1">${this.viDonut(approvedPct, 'donutGrad')}</div>`)}
+                      </div>
+                    </div>
+                  </div>`;
             }
 
             renderSection() {
