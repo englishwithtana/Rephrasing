@@ -110,7 +110,7 @@
                background-attachment: fixed; }
         @media (max-width:768px){ body{ padding:10px 10px 84px 10px !important; } }
         .app-shell{ position:relative; max-width:1380px; margin:0 auto; background:var(--lavender-bg); border-radius:32px; box-shadow:0 32px 70px -18px rgba(24,21,51,.34); overflow:hidden; min-height:calc(100vh - 40px); display:grid; grid-template-columns:92px minmax(0,1fr) 310px; }
-        @media (max-width:1180px){ .app-shell{ grid-template-columns:84px minmax(0,1fr); } .right-panel{ grid-column:1 / -1; border-radius:0 0 32px 32px; border-top:1px solid #e7e3fb; } }
+        @media (max-width:1180px){ .app-shell{ grid-template-columns:84px minmax(0,1fr); } .right-panel{ display:none !important; } }
         @media (max-width:768px){ .app-shell{ grid-template-columns:1fr; border-radius:24px; min-height:auto; } }
         .shell-wave-bg{ position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden; border-radius:32px; }
         .left-rail-wrap{ position:relative; z-index:10; display:flex; align-items:center; justify-content:center; padding:24px 0 24px 18px; }
@@ -140,6 +140,8 @@
         #app-container{ position:relative; z-index:10; }
         .shell-main button.touch-tall{ min-height:0; }
     </style>
+    <!-- Tailwind v3 precompilado: la app se ve igual aunque el visor bloquee el CDN -->
+    <style id="tw-static">*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.visible{visibility:visible}.collapse{visibility:collapse}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.-bottom-8{bottom:-2rem}.-right-6{right:-1.5rem}.-right-8{right:-2rem}.-top-6{top:-1.5rem}.-top-8{top:-2rem}.left-3{left:.75rem}.right-1\.5{right:.375rem}.top-1\.5{top:.375rem}.top-1\/2{top:50%}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-2\.5{margin-bottom:.625rem}.mb-3{margin-bottom:.75rem}.mb-3\.5{margin-bottom:.875rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-auto{margin-left:auto}.mr-1{margin-right:.25rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-12{margin-top:3rem}.mt-2{margin-top:.5rem}.mt-2\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-3\.5{margin-top:.875rem}.mt-4{margin-top:1rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.hidden{display:none}.h-1\.5{height:.375rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-2{height:.5rem}.h-2\.5{height:.625rem}.h-3\.5{height:.875rem}.h-32{height:8rem}.h-36{height:9rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-9{height:2.25rem}.h-full{height:100%}.max-h-\[340px\]{max-height:340px}.max-h-\[380px\]{max-height:380px}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:.5rem}.w-2\.5{width:.625rem}.w-24{width:6rem}.w-28{width:7rem}.w-3\.5{width:.875rem}.w-32{width:8rem}.w-36{width:9rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-9{width:2.25rem}.w-full{width:100%}.w-px{width:1px}.min-w-0{min-width:0}.min-w-9{min-width:2.25rem}.min-w-\[230px\]{min-width:230px}.min-w-\[240px\]{min-width:240px}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.grow{flex-grow:1}.-translate-y-1\/2{--tw-translate-y:-50%}.-translate-y-1\/2,.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-not-allowed{cursor:not-allowed}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.select-all{-webkit-user-select:all;-moz-user-select:all;user-select:all}.list-inside{list-style-position:inside}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-3\.5{gap:.875rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-x-4{-moz-column-gap:1rem;column-gap:1rem}.space-y-0\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-3\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.875rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.875rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.self-end{align-self:flex-end}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis}.truncate,.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-dotted{border-style:dotted}.border-\[\#4f4398\]{--tw-border-opacity:1;border-color:rgb(79 67 152/var(--tw-border-opacity,1))}.border-\[\#cfc7f5\]{--tw-border-opacity:1;border-color:rgb(207 199 245/var(--tw-border-opacity,1))}.border-\[\#dbd4fa\]{--tw-border-opacity:1;border-color:rgb(219 212 250/var(--tw-border-opacity,1))}.border-\[\#e2dcf9\]{--tw-border-opacity:1;border-color:rgb(226 220 249/var(--tw-border-opacity,1))}.border-\[\#e3defa\]{--tw-border-opacity:1;border-color:rgb(227 222 250/var(--tw-border-opacity,1))}.border-\[\#e4dff9\]{--tw-border-opacity:1;border-color:rgb(228 223 249/var(--tw-border-opacity,1))}.border-\[\#e6e1fb\]{--tw-border-opacity:1;border-color:rgb(230 225 251/var(--tw-border-opacity,1))}.border-\[\#eae6ff\]{--tw-border-opacity:1;border-color:rgb(234 230 255/var(--tw-border-opacity,1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138/var(--tw-border-opacity,1))}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77/var(--tw-border-opacity,1))}.border-black\/10{border-color:rgba(0,0,0,.1)}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-emerald-400{--tw-border-opacity:1;border-color:rgb(52 211 153/var(--tw-border-opacity,1))}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255/var(--tw-border-opacity,1))}.border-indigo-200{--tw-border-opacity:1;border-color:rgb(199 210 254/var(--tw-border-opacity,1))}.border-indigo-400{--tw-border-opacity:1;border-color:rgb(129 140 248/var(--tw-border-opacity,1))}.border-indigo-600{--tw-border-opacity:1;border-color:rgb(79 70 229/var(--tw-border-opacity,1))}.border-indigo-900{--tw-border-opacity:1;border-color:rgb(49 46 129/var(--tw-border-opacity,1))}.border-orange-200{--tw-border-opacity:1;border-color:rgb(254 215 170/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-sky-200{--tw-border-opacity:1;border-color:rgb(186 230 253/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-200\/60{border-color:rgba(226,232,240,.6)}.border-slate-200\/80{border-color:rgba(226,232,240,.8)}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-teal-200{--tw-border-opacity:1;border-color:rgb(153 246 228/var(--tw-border-opacity,1))}.border-teal-400{--tw-border-opacity:1;border-color:rgb(45 212 191/var(--tw-border-opacity,1))}.border-violet-200{--tw-border-opacity:1;border-color:rgb(221 214 254/var(--tw-border-opacity,1))}.border-violet-300{--tw-border-opacity:1;border-color:rgb(196 181 253/var(--tw-border-opacity,1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\[\#2dd4bf\]{--tw-bg-opacity:1;background-color:rgb(45 212 191/var(--tw-bg-opacity,1))}.bg-\[\#4f4398\]{--tw-bg-opacity:1;background-color:rgb(79 67 152/var(--tw-bg-opacity,1))}.bg-\[\#e4dff9\]{--tw-bg-opacity:1;background-color:rgb(228 223 249/var(--tw-bg-opacity,1))}.bg-\[\#f3f1ff\]{--tw-bg-opacity:1;background-color:rgb(243 241 255/var(--tw-bg-opacity,1))}.bg-\[\#f5f3ff\]\/70{background-color:rgba(245,243,255,.7)}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-amber-50\/80{background-color:rgba(255,251,235,.8)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11/var(--tw-bg-opacity,1))}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6/var(--tw-bg-opacity,1))}.bg-emerald-100{--tw-bg-opacity:1;background-color:rgb(209 250 229/var(--tw-bg-opacity,1))}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153/var(--tw-bg-opacity,1))}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-indigo-100{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255/var(--tw-bg-opacity,1))}.bg-indigo-50\/80{background-color:rgba(238,242,255,.8)}.bg-indigo-500{--tw-bg-opacity:1;background-color:rgb(99 102 241/var(--tw-bg-opacity,1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-indigo-700{--tw-bg-opacity:1;background-color:rgb(67 56 202/var(--tw-bg-opacity,1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213/var(--tw-bg-opacity,1))}.bg-orange-600{--tw-bg-opacity:1;background-color:rgb(234 88 12/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-sky-100{--tw-bg-opacity:1;background-color:rgb(224 242 254/var(--tw-bg-opacity,1))}.bg-sky-600{--tw-bg-opacity:1;background-color:rgb(2 132 199/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-50\/50{background-color:rgba(248,250,252,.5)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-900\/50{background-color:rgba(15,23,42,.5)}.bg-teal-100{--tw-bg-opacity:1;background-color:rgb(204 251 241/var(--tw-bg-opacity,1))}.bg-teal-50{--tw-bg-opacity:1;background-color:rgb(240 253 250/var(--tw-bg-opacity,1))}.bg-teal-600{--tw-bg-opacity:1;background-color:rgb(13 148 136/var(--tw-bg-opacity,1))}.bg-violet-100{--tw-bg-opacity:1;background-color:rgb(237 233 254/var(--tw-bg-opacity,1))}.bg-violet-50{--tw-bg-opacity:1;background-color:rgb(245 243 255/var(--tw-bg-opacity,1))}.bg-violet-600{--tw-bg-opacity:1;background-color:rgb(124 58 237/var(--tw-bg-opacity,1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\/15{background-color:hsla(0,0%,100%,.15)}.bg-white\/75{background-color:hsla(0,0%,100%,.75)}.bg-white\/80{background-color:hsla(0,0%,100%,.8)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}.from-\[\#eae6ff\]{--tw-gradient-from:#eae6ff var(--tw-gradient-from-position);--tw-gradient-to:rgba(234,230,255,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-\[\#f472b6\]{--tw-gradient-from:#f472b6 var(--tw-gradient-from-position);--tw-gradient-to:rgba(244,114,182,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-\[\#e2dcff\]{--tw-gradient-to:rgba(226,220,255,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#e2dcff var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-\[\#6366f1\]{--tw-gradient-to:#6366f1 var(--tw-gradient-to-position)}.to-\[\#d9e9ff\]{--tw-gradient-to:#d9e9ff var(--tw-gradient-to-position)}.p-1{padding:.25rem}.p-1\.5{padding:.375rem}.p-10{padding:2.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pl-9{padding-left:2.25rem}.pr-1{padding-right:.25rem}.pr-3{padding-right:.75rem}.pt-1{padding-top:.25rem}.pt-2{padding-top:.5rem}.pt-4{padding-top:1rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-\[1\.6\]{line-height:1.6}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.text-\[\#181533\]{--tw-text-opacity:1;color:rgb(24 21 51/var(--tw-text-opacity,1))}.text-\[\#32286b\]{--tw-text-opacity:1;color:rgb(50 40 107/var(--tw-text-opacity,1))}.text-\[\#4f4398\]{--tw-text-opacity:1;color:rgb(79 67 152/var(--tw-text-opacity,1))}.text-\[\#555075\]{--tw-text-opacity:1;color:rgb(85 80 117/var(--tw-text-opacity,1))}.text-\[\#6b6787\]{--tw-text-opacity:1;color:rgb(107 103 135/var(--tw-text-opacity,1))}.text-\[\#8c87a8\]{--tw-text-opacity:1;color:rgb(140 135 168/var(--tw-text-opacity,1))}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138/var(--tw-text-opacity,1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77/var(--tw-text-opacity,1))}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6/var(--tw-text-opacity,1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9/var(--tw-text-opacity,1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14/var(--tw-text-opacity,1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15/var(--tw-text-opacity,1))}.text-emerald-500{--tw-text-opacity:1;color:rgb(16 185 129/var(--tw-text-opacity,1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105/var(--tw-text-opacity,1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87/var(--tw-text-opacity,1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70/var(--tw-text-opacity,1))}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59/var(--tw-text-opacity,1))}.text-emerald-950{--tw-text-opacity:1;color:rgb(2 44 34/var(--tw-text-opacity,1))}.text-indigo-100{--tw-text-opacity:1;color:rgb(224 231 255/var(--tw-text-opacity,1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254/var(--tw-text-opacity,1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241/var(--tw-text-opacity,1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229/var(--tw-text-opacity,1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202/var(--tw-text-opacity,1))}.text-indigo-800{--tw-text-opacity:1;color:rgb(55 48 163/var(--tw-text-opacity,1))}.text-indigo-900{--tw-text-opacity:1;color:rgb(49 46 129/var(--tw-text-opacity,1))}.text-indigo-900\/80{color:rgba(49,46,129,.8)}.text-indigo-950{--tw-text-opacity:1;color:rgb(30 27 75/var(--tw-text-opacity,1))}.text-orange-800{--tw-text-opacity:1;color:rgb(154 52 18/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-sky-700{--tw-text-opacity:1;color:rgb(3 105 161/var(--tw-text-opacity,1))}.text-sky-800{--tw-text-opacity:1;color:rgb(7 89 133/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-teal-200{--tw-text-opacity:1;color:rgb(153 246 228/var(--tw-text-opacity,1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212/var(--tw-text-opacity,1))}.text-teal-500{--tw-text-opacity:1;color:rgb(20 184 166/var(--tw-text-opacity,1))}.text-teal-600{--tw-text-opacity:1;color:rgb(13 148 136/var(--tw-text-opacity,1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110/var(--tw-text-opacity,1))}.text-teal-800{--tw-text-opacity:1;color:rgb(17 94 89/var(--tw-text-opacity,1))}.text-violet-700{--tw-text-opacity:1;color:rgb(109 40 217/var(--tw-text-opacity,1))}.text-violet-800{--tw-text-opacity:1;color:rgb(91 33 182/var(--tw-text-opacity,1))}.text-violet-900{--tw-text-opacity:1;color:rgb(76 29 149/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.decoration-rose-300{text-decoration-color:#fda4af}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-25{opacity:.25}.opacity-30{opacity:.3}.opacity-40{opacity:.4}.opacity-50{opacity:.5}.opacity-70{opacity:.7}.opacity-80{opacity:.8}.opacity-90{opacity:.9}.opacity-95{opacity:.95}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-md,.shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring,.ring-2{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-\[\#4f4398\]\/30{--tw-ring-color:rgba(79,67,152,.3)}.ring-amber-400{--tw-ring-opacity:1;--tw-ring-color:rgb(251 191 36/var(--tw-ring-opacity,1))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.selection\:bg-indigo-100 ::-moz-selection{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.selection\:bg-indigo-100 ::selection{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.selection\:text-indigo-900 ::-moz-selection{--tw-text-opacity:1;color:rgb(49 46 129/var(--tw-text-opacity,1))}.selection\:text-indigo-900 ::selection{--tw-text-opacity:1;color:rgb(49 46 129/var(--tw-text-opacity,1))}.selection\:bg-indigo-100::-moz-selection{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.selection\:bg-indigo-100::selection{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.selection\:text-indigo-900::-moz-selection{--tw-text-opacity:1;color:rgb(49 46 129/var(--tw-text-opacity,1))}.selection\:text-indigo-900::selection{--tw-text-opacity:1;color:rgb(49 46 129/var(--tw-text-opacity,1))}.placeholder\:text-\[\#9893b3\]::-moz-placeholder{--tw-text-opacity:1;color:rgb(152 147 179/var(--tw-text-opacity,1))}.placeholder\:text-\[\#9893b3\]::placeholder{--tw-text-opacity:1;color:rgb(152 147 179/var(--tw-text-opacity,1))}.placeholder\:text-slate-400::-moz-placeholder{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.placeholder\:text-slate-400::placeholder{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.last\:mb-0:last-child{margin-bottom:0}.hover\:border-\[\#4f4398\]:hover{--tw-border-opacity:1;border-color:rgb(79 67 152/var(--tw-border-opacity,1))}.hover\:border-slate-300:hover{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.hover\:bg-\[\#3b307c\]:hover{--tw-bg-opacity:1;background-color:rgb(59 48 124/var(--tw-bg-opacity,1))}.hover\:bg-\[\#3f3482\]:hover{--tw-bg-opacity:1;background-color:rgb(63 52 130/var(--tw-bg-opacity,1))}.hover\:bg-\[\#f3f1ff\]:hover{--tw-bg-opacity:1;background-color:rgb(243 241 255/var(--tw-bg-opacity,1))}.hover\:bg-\[\#faf9ff\]:hover{--tw-bg-opacity:1;background-color:rgb(250 249 255/var(--tw-bg-opacity,1))}.hover\:bg-amber-100:hover{--tw-bg-opacity:1;background-color:rgb(254 243 199/var(--tw-bg-opacity,1))}.hover\:bg-amber-600:hover{--tw-bg-opacity:1;background-color:rgb(217 119 6/var(--tw-bg-opacity,1))}.hover\:bg-amber-700:hover{--tw-bg-opacity:1;background-color:rgb(180 83 9/var(--tw-bg-opacity,1))}.hover\:bg-emerald-100:hover{--tw-bg-opacity:1;background-color:rgb(209 250 229/var(--tw-bg-opacity,1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87/var(--tw-bg-opacity,1))}.hover\:bg-indigo-100:hover{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.hover\:bg-indigo-50:hover{--tw-bg-opacity:1;background-color:rgb(238 242 255/var(--tw-bg-opacity,1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202/var(--tw-bg-opacity,1))}.hover\:bg-orange-700:hover{--tw-bg-opacity:1;background-color:rgb(194 65 12/var(--tw-bg-opacity,1))}.hover\:bg-rose-100:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.hover\:bg-rose-50:hover{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.hover\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\:bg-sky-700:hover{--tw-bg-opacity:1;background-color:rgb(3 105 161/var(--tw-bg-opacity,1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.hover\:bg-slate-300:hover{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.hover\:bg-slate-50:hover{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.hover\:bg-slate-900:hover{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.hover\:bg-teal-700:hover{--tw-bg-opacity:1;background-color:rgb(15 118 110/var(--tw-bg-opacity,1))}.hover\:bg-violet-700:hover{--tw-bg-opacity:1;background-color:rgb(109 40 217/var(--tw-bg-opacity,1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\:bg-white\/80:hover{background-color:hsla(0,0%,100%,.8)}.hover\:text-indigo-600:hover{--tw-text-opacity:1;color:rgb(79 70 229/var(--tw-text-opacity,1))}.hover\:text-indigo-700:hover{--tw-text-opacity:1;color:rgb(67 56 202/var(--tw-text-opacity,1))}.hover\:text-indigo-800:hover{--tw-text-opacity:1;color:rgb(55 48 163/var(--tw-text-opacity,1))}.hover\:text-rose-600:hover{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.hover\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.hover\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.focus\:border-\[\#4f4398\]:focus{--tw-border-opacity:1;border-color:rgb(79 67 152/var(--tw-border-opacity,1))}.focus\:border-indigo-500:focus{--tw-border-opacity:1;border-color:rgb(99 102 241/var(--tw-border-opacity,1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus\:ring-indigo-100:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(224 231 255/var(--tw-ring-opacity,1))}.focus\:ring-rose-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(244 63 94/var(--tw-ring-opacity,1))}.focus\:ring-teal-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(20 184 166/var(--tw-ring-opacity,1))}.disabled\:bg-slate-50:disabled{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}@media (min-width:640px){.sm\:block{display:block}.sm\:w-48{width:12rem}.sm\:w-auto{width:auto}.sm\:flex-initial{flex:0 1 auto}.sm\:flex-none{flex:none}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:gap-6{gap:1.5rem}.sm\:self-auto{align-self:auto}.sm\:p-10{padding:2.5rem}.sm\:p-5{padding:1.25rem}.sm\:p-6{padding:1.5rem}.sm\:p-7{padding:1.75rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:.875rem;line-height:1.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width:768px){.md\:w-auto{width:auto}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}}@media (min-width:1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}}@media (min-width:1280px){.xl\:col-span-4{grid-column:span 4/span 4}.xl\:col-span-8{grid-column:span 8/span 8}.xl\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}}</style>
 </head>
 <body class="min-h-screen antialiased selection:bg-indigo-100 selection:text-indigo-900">
 
@@ -177,7 +179,7 @@
           <div class="flex items-center gap-2.5 flex-wrap">
             <div class="bg-[#f3f1ff] border border-[#e3defa] px-3.5 py-2 rounded-2xl text-xs font-bold text-[#32286b] flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-[#2dd4bf]"></span>
-              <span id="header-progress-text">0 / 478 dominados</span>
+              <span id="header-progress-text">0 / 978 dominados</span>
             </div>
             <button type="button" onclick="app.openBackupModal()" title="Gestionar copia de seguridad (.json)" class="bg-[#4f4398] hover:bg-[#3f3482] text-white px-3.5 py-2 rounded-2xl text-xs font-bold shadow-sm transition flex items-center gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -261,7 +263,7 @@
                 </div>
                 <div class="flex items-center justify-between text-xs">
                     <span class="font-semibold text-slate-600">Ejercicios dominados:</span>
-                    <span id="backup-summary-count" class="font-bold text-slate-900">0 / 478</span>
+                    <span id="backup-summary-count" class="font-bold text-slate-900">0 / 978</span>
                 </div>
             </div>
 
@@ -288,7 +290,7 @@
     <!-- Pie de página -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <p>Rephrasing Master PAU/EBAU · Entrenamiento gramatical completo para 2º de Bachillerato (478 ejercicios)</p>
+            <p>Rephrasing Master PAU/EBAU · Entrenamiento gramatical completo para 2º de Bachillerato (8 bloques y Práctica Global PAU)</p>
             <div class="flex items-center gap-4">
                 <button onclick="app.openBackupModal()" class="text-indigo-600 hover:text-indigo-800 font-semibold">Copia de seguridad (.json)</button>
                 <button onclick="app.confirmResetAll()" class="text-rose-500 hover:text-rose-700 font-semibold underline">Borrar progreso</button>
@@ -26294,6 +26296,1011 @@
                                 "title": "Topic C2",
                                 "prompt": "Is it important to preserve cultural heritage? Explain.",
                                 "targetWords": 140
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "2014-2015-opcion-a-screen-dinosaurs",
+                    "readingTitle": "Screen dinosaurs",
+                    "year": "2014-2015",
+                    "source": "PAU Andalucía · Lengua Extranjera (Inglés) · Curso 2014-2015 · Titular junio · Opción A",
+                    "reading": {
+                        "instructions": "I * COMPREHENSION (This section consists of six items combining ‘True/False’ and/or ‘Multiple Choice’ questions) (3 points)",
+                        "maxPoints": 3,
+                        "text": [
+                            "⟦1⟧In 1922 a short film confused its audience by showing dinosaurs that were taken for real, living ⟦2⟧dinosaurs that had somehow escaped extinction. The next day newspapers revealed the truth: they were ⟦3⟧just special effects. Well, today we think we know what dinosaurs looked like because we’ve watched ⟦4⟧hours of films and documentaries – from the black-and-white, robotic figures of old movies to today’s ⟦5⟧computer-generated dinosaurs. But although animatronics have become extremely sophisticated and ⟦6⟧realistic, what we see on screen today is a combination of fact and fantasy, just as it was 100 years ago.",
+                            "⟦7⟧Much of what movies have taught us is wrong. For instance, the latest paleontological research says now ⟦8⟧that velociraptors (which were also much smaller than in Jurassic Park, about the size of a large chicken), ⟦9⟧and quite possibly T-rex itself, could have had their bodies covered in feathers rather than skin – although ⟦10⟧they lacked the ability to fly.",
+                            "⟦11⟧In the end, fiction is fiction, so perhaps it doesn’t matter very much if Jurassic Park and other movies ⟦12⟧change some facts to add excitement. However, mixing truth and conjecture is more significant in ⟦13⟧programmes that could be mistaken for reality, like Walking with Dinosaurs, often cited as the most ⟦14⟧successful television documentary series of all time. But can it truly be classified as a documentary? Its ⟦15⟧format is familiar to viewers as it resembles real-life wildlife programmes. So it feels like everything you are ⟦16⟧shown and told in those so-called documentaries is established beyond doubt. But people should be ⟦17⟧aware that many of today’s dinosaur programmes represent just the way things might possibly have been, ⟦18⟧and so they should be enjoyed as a hybrid of fact and fiction."
+                        ],
+                        "questions": [
+                            {
+                                "id": "q1",
+                                "type": "multiple_choice",
+                                "prompt": "Recent studies claim that…",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "velociraptors were represented properly in Jurassic Park, but the T-rex was not."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "dinosaurs, like velociraptors and T-rex, most probably had feathers but couldn’t fly."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "velociraptors had chicken feathers, but their feathers were bigger than chickens’."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "velociraptors had feathers in Jurassic Park but probably not in real life."
+                                    }
+                                ],
+                                "correct": "b",
+                                "group": "CHOOSE AND WRITE THE CORRECT OPTION (A, B, C or D). (0.5 points each)"
+                            },
+                            {
+                                "id": "q2",
+                                "type": "multiple_choice",
+                                "prompt": "TV programmes such as ‘Walking with Dinosaurs’ seem to report true facts because…",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "they show things as they happened in real life."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "they have been the most successful television series of all time."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "they are very similar to actual nature documentaries."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "they do not mix reality and speculation."
+                                    }
+                                ],
+                                "correct": "c"
+                            },
+                            {
+                                "id": "q3",
+                                "type": "true_false_justify",
+                                "prompt": "Modern dinosaur films are closer to reality than the old, mechanical-looking movies",
+                                "points": 0.5,
+                                "correct": false,
+                                "acceptedLines": [
+                                    "5-6"
+                                ],
+                                "officialAnswer": "FALSE (lines 5-6) “But although animatronics have become extremely sophisticated and realistic, what we see on screen today is a combination of fact and fantasy, just as it was 100 years ago.”",
+                                "group": "ARE THESE STATEMENTS TRUE OR FALSE? JUSTIFY YOUR ANSWERS WITH THE PRECISE WORDS OR PHRASES FROM THE TEXT (0.5 points each)"
+                            },
+                            {
+                                "id": "q4",
+                                "type": "true_false_justify",
+                                "prompt": "Actual velociraptors were as big as a large chicken.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "7-8"
+                                ],
+                                "officialAnswer": "TRUE (lines 7-8) “For instance, the latest paleontological research says now that velociraptors (which were also much smaller than in Jurassic Park, about the size of a large chicken)...”"
+                            },
+                            {
+                                "id": "q5",
+                                "type": "true_false_justify",
+                                "prompt": "Movies like Jurassic Park transform reality to make them more entertaining.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "11-12"
+                                ],
+                                "officialAnswer": "TRUE (lines 11-12) “In the end, fiction is fiction, so perhaps it doesn’t matter very much if Jurassic Park and other movies change some facts to add excitement.”"
+                            },
+                            {
+                                "id": "q6",
+                                "type": "true_false_justify",
+                                "prompt": "The writer wants the public to understand that dinosaur “documentaries” do not contain absolute historical facts.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "16-18"
+                                ],
+                                "officialAnswer": "TRUE (lines 16-18) “But people should be aware that many of today’s dinosaur programmes represent just the way things might possibly have been, and so they should be enjoyed as a hybrid of fact and fiction.”"
+                            }
+                        ]
+                    },
+                    "practice": {
+                        "title": "Use of English",
+                        "instructions": "II * USE OF ENGLISH (4 points; questions 7-12, 0.25 points each; 13-17, 0.5 points each). Esta parte no puntúa en ninguna nota de la app: es práctica adicional.",
+                        "items": [
+                            {
+                                "id": "u7",
+                                "prompt": "“investigation” (noun)",
+                                "group": "7. FIND IN THE TEXT ONE SYNONYM FOR “investigation” (noun).",
+                                "officialAnswer": "research (line 7)"
+                            },
+                            {
+                                "id": "u8",
+                                "prompt": "“more distant than, outside the limits of something”",
+                                "group": "8. FIND IN THE TEXT ONE WORD THAT HAS THE FOLLOWING DEFINITION:",
+                                "officialAnswer": "beyond (line 16)"
+                            },
+                            {
+                                "id": "u9",
+                                "prompt": "“He is so rude! How can you put ……. with him?”\nthrough / up / out / in",
+                                "group": "9. FILL IN THE GAP WITH THE CORRECT OPTION:",
+                                "officialAnswer": "up"
+                            },
+                            {
+                                "id": "u10",
+                                "prompt": "“ability” (noun)",
+                                "group": "10. GIVE AN ADJECTIVE WITH THE SAME ROOT AS:",
+                                "officialAnswer": "able / unable"
+                            },
+                            {
+                                "id": "u11",
+                                "prompt": "“It’s the tallest building I … (ever see)”.",
+                                "group": "11. FILL IN THE GAP WITH A CORRECT FORM OF THE VERB IN BRACKETS:",
+                                "officialAnswer": "have ever seen"
+                            },
+                            {
+                                "id": "u12",
+                                "prompt": "connect / pray / link / join",
+                                "group": "12. WHICH WORD DOES NOT HAVE THE SAME MEANING?",
+                                "officialAnswer": "pray"
+                            },
+                            {
+                                "id": "u13",
+                                "prompt": "“Parents should take good care of his childrens.”",
+                                "group": "13. REWRITE THE SENTENCE CORRECTLY.",
+                                "officialAnswer": "Parents should take good care of their children."
+                            },
+                            {
+                                "id": "u14",
+                                "prompt": "“Cecilia baked the carrot cake for us.” (Subrayado: no visible en el texto extraído; deducido de la solución oficial)",
+                                "group": "14. GIVE A QUESTION FOR THE UNDERLINED WORDS:",
+                                "officialAnswer": "Who baked the carrot cake for you / us?"
+                            },
+                            {
+                                "id": "u15",
+                                "prompt": "If the car had been checked before the trip… …",
+                                "group": "15. COMPLETE THE FOLLOWING CONDITIONAL SENTENCE:",
+                                "officialAnswer": "… it wouldn’t have broken down.\n(Tercer condicional: would / wouldn’t + have + participio. Respuesta abierta.)"
+                            },
+                            {
+                                "id": "u16",
+                                "prompt": "“We were shown the house by the owner.”",
+                                "group": "16. TURN THE FOLLOWING SENTENCE INTO THE ACTIVE VOICE.",
+                                "officialAnswer": "The owner showed us the house."
+                            },
+                            {
+                                "id": "u17",
+                                "prompt": "babies · room · not · this · warm · is · for · enough · the",
+                                "group": "17. USE THE WORDS IN THE BOXES TO MAKE A MEANINGFUL SENTENCE. USE ALL AND ONLY THE WORDS IN THE BOXES WITHOUT CHANGING THEIR FORM:",
+                                "officialAnswer": "This room is not warm enough for the babies."
+                            }
+                        ]
+                    },
+                    "writing": {
+                        "instructions": "III * PRODUCTION (3 points)\n18. WRITE A COMPOSITION OF APPROXIMATELY 120 WORDS ABOUT THE TOPIC PROPOSED. YOU MUST FOCUS STRICTLY ON IT.",
+                        "maxPoints": 3,
+                        "tasks": [
+                            {
+                                "id": "w1",
+                                "title": "Option A",
+                                "prompt": "What types of films do you prefer? Explain.",
+                                "targetWords": 120
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "2014-2015-opcion-b-tattoos",
+                    "readingTitle": "Tattoos",
+                    "year": "2014-2015",
+                    "source": "PAU Andalucía · Lengua Extranjera (Inglés) · Curso 2014-2015 · Titular junio · Opción B",
+                    "reading": {
+                        "instructions": "I * COMPREHENSION (This section consists of six items combining ‘True/False’ and/or ‘Multiple Choice’ questions) (3 points)",
+                        "maxPoints": 3,
+                        "text": [
+                            "⟦1⟧The discovery of mummies with very simple decorative tattoos has proved the existence of tattooing ⟦2⟧since prehistoric times. Scientists have not been able to explain the symbolism of these designs made up of ⟦3⟧lines and dots, but it is thought they were part of a medical healing process.",
+                            "⟦4⟧However, for nearly as long as there has been tattooing, there has been condemnation. The Romans ⟦5⟧used tattoos to mark slaves and criminals and the Japanese also considered them punishment. If you were ⟦6⟧a convicted criminal, you would get a mark on your forehead, convicted twice get another, and if you were ⟦7⟧convicted a third time, you would receive a third and final mark making the Japanese symbol for “dog”.",
+                            "⟦8⟧In some other societies, tattoos gained respect and assured the owners status for life. The Polynesians ⟦9⟧developed them to mark rank, and there is evidence that the Incas tattooed their warriors to remind them ⟦10⟧and others of their success and bravery in battle.",
+                            "⟦11⟧In the late 1700s Captain Cook and his men reintroduced tattooing in Europe. Returning from one of his ⟦12⟧trips, he brought a heavily tattooed Polynesian man who was a sensation among London upper-class. They ⟦13⟧were so fascinated that they began adorning themselves with body marks in discreet places and, for a short ⟦14⟧time, tattooing became a trend.",
+                            "⟦15⟧After World War II, tattoos had a terrible reputation because newspapers reported stories of blood ⟦16⟧poisoning and other diseases and the people who wore them were associated with delinquents. Today they ⟦17⟧are becoming so popular that it is getting harder and harder to find individuals without a tattoo. This rise in ⟦18⟧popularity has placed tattooists in the category of “fine artists”."
+                        ],
+                        "questions": [
+                            {
+                                "id": "q1",
+                                "type": "multiple_choice",
+                                "prompt": "Tattooing...",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "has always been fashionable."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "is no longer related to delinquency."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "was forbidden after World War II."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "has been considered art since prehistoric times."
+                                    }
+                                ],
+                                "correct": "b",
+                                "group": "CHOOSE AND WRITE THE CORRECT OPTION (A, B, C or D). (0.5 points each)"
+                            },
+                            {
+                                "id": "q2",
+                                "type": "multiple_choice",
+                                "prompt": "In Japan …",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "murderers were marked with the symbol for “dog”."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "third-time offenders were marked with the symbol for “dog”."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "no criminals were marked with the symbol for “dog”."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "all offenders were marked with the symbol for “dog”."
+                                    }
+                                ],
+                                "correct": "b"
+                            },
+                            {
+                                "id": "q3",
+                                "type": "true_false_justify",
+                                "prompt": "According to some experts, the earliest tattoos may have been used to cure diseases.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "2-3"
+                                ],
+                                "officialAnswer": "TRUE (lines 2-3) “Scientists have not been able to explain the symbolism of these designs made up of lines and dots, but it is thought they were part of a medical healing process.”",
+                                "group": "ARE THESE STATEMENTS TRUE OR FALSE? JUSTIFY YOUR ANSWERS WITH THE PRECISE WORDS OR PHRASES FROM THE TEXT (0.5 points each)"
+                            },
+                            {
+                                "id": "q4",
+                                "type": "true_false_justify",
+                                "prompt": "In some cultures prominent citizens had their bodies tattooed.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "8-9"
+                                ],
+                                "officialAnswer": "TRUE (lines 8-9) “In some other societies, tattoos gained respect and assured the owners status for life. The Polynesians developed them to mark rank...”"
+                            },
+                            {
+                                "id": "q5",
+                                "type": "true_false_justify",
+                                "prompt": "In the 18th century Londoners wore visible tattoos.",
+                                "points": 0.5,
+                                "correct": false,
+                                "acceptedLines": [
+                                    "12-13"
+                                ],
+                                "officialAnswer": "FALSE (lines 12-13) “They were so fascinated that they began adorning themselves with body marks in discreet places...”"
+                            },
+                            {
+                                "id": "q6",
+                                "type": "true_false_justify",
+                                "prompt": "In the mid 1900s tattooing was considered a harmful practice by some media.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "15-16"
+                                ],
+                                "officialAnswer": "TRUE (lines 15-16) “After World War II, tattoos had a terrible reputation because newspapers reported stories of blood poisoning and other diseases...”"
+                            }
+                        ]
+                    },
+                    "practice": {
+                        "title": "Use of English",
+                        "instructions": "II * USE OF ENGLISH (4 points; questions 7-12, 0.25 points each; 13-17, 0.5 points each). Esta parte no puntúa en ninguna nota de la app: es práctica adicional.",
+                        "items": [
+                            {
+                                "id": "u7",
+                                "prompt": "“rise” (noun)",
+                                "group": "7. GIVE ONE OPPOSITE for “rise” (noun) AS IT IS USED IN THE TEXT (line 17).",
+                                "officialAnswer": "fall / decrease / drop / decline"
+                            },
+                            {
+                                "id": "u8",
+                                "prompt": "“laugh” (verb)",
+                                "group": "8. GIVE A NOUN WITH THE SAME ROOT AS:",
+                                "officialAnswer": "laughter"
+                            },
+                            {
+                                "id": "u9",
+                                "prompt": "“courage” (noun)",
+                                "group": "9. FIND IN THE TEXT ONE SYNONYM FOR:",
+                                "officialAnswer": "bravery (line 10)"
+                            },
+                            {
+                                "id": "u10",
+                                "prompt": "“She is always complaining ...... her school.”",
+                                "group": "10. FILL IN THE GAP WITH THE CORRECT PREPOSITION:",
+                                "officialAnswer": "about"
+                            },
+                            {
+                                "id": "u11",
+                                "prompt": "“A proof of something.”",
+                                "group": "11. FIND IN THE TEXT THE WORD WHICH HAS THE FOLLOWING DEFINITION:",
+                                "officialAnswer": "evidence (line 9)"
+                            },
+                            {
+                                "id": "u12",
+                                "prompt": "“I’m tired because I ......... (work) since lunchtime.”",
+                                "group": "12. FILL IN THE GAP WITH A CORRECT FORM OF THE VERB IN BRACKETS:",
+                                "officialAnswer": "have been working / have worked"
+                            },
+                            {
+                                "id": "u13",
+                                "prompt": "“It is not necessary for them to attend the lecture.”\nThey …",
+                                "group": "13. REWRITE THE SENTENCE WITHOUT CHANGING ITS MEANING. BEGIN AS INDICATED:",
+                                "officialAnswer": "They needn’t / don’t have to / don’t need to attend the lecture."
+                            },
+                            {
+                                "id": "u14",
+                                "prompt": "“He was hit by a falling rock while skiing up in the mountains.”",
+                                "group": "14. TURN THE FOLLOWING SENTENCE INTO THE ACTIVE VOICE:",
+                                "officialAnswer": "A falling rock hit him while he was skiing up in the mountains."
+                            },
+                            {
+                                "id": "u15",
+                                "prompt": "“If I had known the truth, ....”",
+                                "group": "15. COMPLETE THE FOLLOWING CONDITIONAL SENTENCE:",
+                                "officialAnswer": "… I would have told you / acted differently.\n(Tercer condicional: would + have + participio. Respuesta abierta.)"
+                            },
+                            {
+                                "id": "u16",
+                                "prompt": "“My neighbour watered the plants.” “It had been raining for five hours.”",
+                                "group": "16. JOIN THE FOLLOWING SENTENCES USING AN APPROPRIATE LINKER (DO NOT USE AND, BUT, OR BECAUSE). MAKE CHANGES IF NECESSARY:",
+                                "officialAnswer": "My neighbour watered the plants although / even though it had been raining for five hours."
+                            },
+                            {
+                                "id": "u17",
+                                "prompt": "“Tattoos are created by inserting ink below the skin.” (Subrayado: no visible en el texto extraído; deducido de la solución oficial)",
+                                "group": "17. GIVE A QUESTION FOR THE UNDERLINED WORDS:",
+                                "officialAnswer": "How are tattoos created?"
+                            }
+                        ]
+                    },
+                    "writing": {
+                        "instructions": "III * PRODUCTION (3 points)\n18. WRITE A COMPOSITION OF APPROXIMATELY 120 WORDS ABOUT THE TOPIC PROPOSED. YOU MUST FOCUS STRICTLY ON IT.",
+                        "maxPoints": 3,
+                        "tasks": [
+                            {
+                                "id": "w1",
+                                "title": "Option B",
+                                "prompt": "Tattoos, piercings, clothes, hairstyle, … do you like to follow trends? Explain.",
+                                "targetWords": 120
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "2014-2015-opcion-a-la-tomatina",
+                    "readingTitle": "La Tomatina festival: the messiest holiday in the world",
+                    "year": "2014-2015",
+                    "source": "PAU Andalucía · Lengua Extranjera (Inglés) · Curso 2014-2015 · Titular septiembre · Opción A",
+                    "reading": {
+                        "instructions": "I * COMPREHENSION (This section consists of six items combining ‘True/False’ and/or ‘Multiple Choice’ questions) (3 points)",
+                        "maxPoints": 3,
+                        "text": [
+                            "⟦1⟧The world-famous Tomatina festival has been held in the Valencian town of Buñol on the last ⟦2⟧Wednesday of August since 1945. Every year, thousands of tourists join the town’s 9,000 inhabitants to ⟦3⟧throw tonnes of tomatoes at one another. The event, often regarded as the world’s largest food fight, is the ⟦4⟧culmination of a week-long celebration made up of street parties, fireworks, food fairs and a paella cooking ⟦5⟧contest.",
+                            "⟦6⟧The tradition began in the mid-1940s, though its origins are unclear. It has been attributed to a ⟦7⟧foodfight that broke out in the town in 1945 during the “parade of giants and big heads” and had to be ⟦8⟧broken up by the police. The fight was banned in the early 1950s until 1957, when the locals held a funeral ⟦9⟧for a giant tomato in protest and successfully had the ban removed.",
+                            "⟦10⟧Over 100 tonnes of tomatoes are brought to the town and thrown during an hour-long battle, at an ⟦11⟧estimated total cost of €140,000, or €2,300 a minute. In recent years the festival has become so popular ⟦12⟧that the council decided to limit the attendance to the event to a maximum of 20,000 people.",
+                            "⟦13⟧The fight begins at 11am with the firing of a water cannon. According to the rules, participants must ⟦14⟧stop throwing tomatoes as soon as they hear the second round of the cannon. Then, it’s time to clean up. ⟦15⟧Actually, once the tomato pulp is sprayed down by fire trucks, the ground is clean due to the acidity of the ⟦16⟧tomato.",
+                            "⟦17⟧The tomato festival has become a global phenomenon, with similar festivals staged at one time or ⟦18⟧another in Colombia, China, the US and Chile."
+                        ],
+                        "questions": [
+                            {
+                                "id": "q1",
+                                "type": "multiple_choice",
+                                "prompt": "As a consequence of the huge popularity of the festival, the council…",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "has restricted attendance."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "has extended the duration of the event."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "has forbidden the attendance of foreign people."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "banned the celebration for a period of time."
+                                    }
+                                ],
+                                "correct": "a",
+                                "group": "CHOOSE AND WRITE THE CORRECT OPTION (A, B, C or D). (0.5 points each)"
+                            },
+                            {
+                                "id": "q2",
+                                "type": "multiple_choice",
+                                "prompt": "In the late 50s, the locals …",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "were able to get the festival back after a fight against the police."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "made the government hold a funeral for a giant tomato."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "used their sense of humour to get the festival back."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "took part in a giant heads’ parade to protest because the battle had been banned."
+                                    }
+                                ],
+                                "correct": "c"
+                            },
+                            {
+                                "id": "q3",
+                                "type": "true_false_justify",
+                                "prompt": "No one seems to know exactly how it all started.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "6"
+                                ],
+                                "officialAnswer": "TRUE (lines 6) “The tradition began in the mid-1940s, though its origins are unclear.”",
+                                "group": "ARE THESE STATEMENTS TRUE OR FALSE? JUSTIFY YOUR ANSWERS WITH THE PRECISE WORDS OR PHRASES FROM THE TEXT (0.5 points each)"
+                            },
+                            {
+                                "id": "q4",
+                                "type": "true_false_justify",
+                                "prompt": "The tomatoes are especially delivered for the event.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "10"
+                                ],
+                                "officialAnswer": "TRUE (lines 10) “Over 100 tonnes of tomatoes are brought to the town and thrown during an hour-long battle...”"
+                            },
+                            {
+                                "id": "q5",
+                                "type": "true_false_justify",
+                                "prompt": "The battle ends after the ground is clean.",
+                                "points": 0.5,
+                                "correct": false,
+                                "acceptedLines": [
+                                    "13-14"
+                                ],
+                                "officialAnswer": "FALSE (lines 13-14) “According to the rules, participants must stop throwing tomatoes as soon as they hear the second round of the cannon. Then, it’s time to clean up.”"
+                            },
+                            {
+                                "id": "q6",
+                                "type": "true_false_justify",
+                                "prompt": "La Tomatina has inspired other similar celebrations all over the world.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "17-18"
+                                ],
+                                "officialAnswer": "TRUE (lines 17-18) “The tomato festival has become a global phenomenon, with similar festivals staged at one time or another in Colombia, China, the US and Chile.”"
+                            }
+                        ]
+                    },
+                    "practice": {
+                        "title": "Use of English",
+                        "instructions": "II * USE OF ENGLISH (4 points; questions 7-12, 0.25 points each; 13-17, 0.5 points each). Esta parte no puntúa en ninguna nota de la app: es práctica adicional.",
+                        "items": [
+                            {
+                                "id": "u7",
+                                "prompt": "“popular” (adjective)",
+                                "group": "7. GIVE ONE OPPOSITE FOR “popular” (adjective) AS IT IS USED IN THE TEXT (line 11).",
+                                "officialAnswer": "unpopular"
+                            },
+                            {
+                                "id": "u8",
+                                "prompt": "“successfully” (adverb)",
+                                "group": "8. GIVE A VERB WITH THE SAME ROOT AS:",
+                                "officialAnswer": "succeed"
+                            },
+                            {
+                                "id": "u9",
+                                "prompt": "“worldwide” (adjective)",
+                                "group": "9. FIND IN THE TEXT ONE SYNONYM FOR:",
+                                "officialAnswer": "global (line 17)"
+                            },
+                            {
+                                "id": "u10",
+                                "prompt": "I couldn’t help … when I saw her fall down.\n(Verbo entre paréntesis no visible en el texto extraído; la solución oficial es «laughing».)",
+                                "group": "10. FILL IN THE GAP WITH A CORRECT FORM OF THE VERB IN BRACKETS:",
+                                "officialAnswer": "laughing"
+                            },
+                            {
+                                "id": "u11",
+                                "prompt": "“I came ... an old picture of Jake while I was looking through the album”\ninto / across / out / over",
+                                "group": "11. FILL IN THE GAP WITH THE CORRECT OPTION:",
+                                "officialAnswer": "across"
+                            },
+                            {
+                                "id": "u12",
+                                "prompt": "terrible / useful / awful / horrible",
+                                "group": "12. WHICH WORD DOES NOT HAVE THE SAME MEANING?",
+                                "officialAnswer": "useful"
+                            },
+                            {
+                                "id": "u13",
+                                "prompt": "“There is much people as hard-working as James.”",
+                                "group": "13. REWRITE THE SENTENCE CORRECTLY:",
+                                "officialAnswer": "There are as many people as hard-working as James.\n(Solución oficial tal cual; la frase resulta poco natural en inglés.)"
+                            },
+                            {
+                                "id": "u14",
+                                "prompt": "“He asked her to write to him while he was away.”",
+                                "group": "14. TURN THE FOLLOWING SENTENCE INTO DIRECT SPEECH:",
+                                "officialAnswer": "“Write to me while you are away, please,” he asked her."
+                            },
+                            {
+                                "id": "u15",
+                                "prompt": "“If he hadn’t shouted at me, …”",
+                                "group": "15. COMPLETE THE FOLLOWING CONDITIONAL SENTENCE:",
+                                "officialAnswer": "… I wouldn’t have got angry / left.\n(Tercer condicional: would / wouldn’t + have + participio. Respuesta abierta.)"
+                            },
+                            {
+                                "id": "u16",
+                                "prompt": "“I haven’t attended La Tomatina for five years.”\nIt’s been five years…",
+                                "group": "16. REWRITE THE SENTENCE WITHOUT CHANGING ITS MEANING. BEGIN AS INDICATED:",
+                                "officialAnswer": "It’s been five years since I (last) attended La Tomatina."
+                            },
+                            {
+                                "id": "u17",
+                                "prompt": "James didn’t pay the deposit for the new flat.",
+                                "group": "17. TURN THE FOLLOWING SENTENCE INTO THE PASSIVE VOICE:",
+                                "officialAnswer": "The deposit for the new flat wasn’t paid by James."
+                            }
+                        ]
+                    },
+                    "writing": {
+                        "instructions": "III * PRODUCTION (3 points)\n18. WRITE A COMPOSITION OF APPROXIMATELY 120 WORDS ABOUT THE TOPIC PROPOSED. YOU MUST FOCUS STRICTLY ON IT.",
+                        "maxPoints": 3,
+                        "tasks": [
+                            {
+                                "id": "w1",
+                                "title": "Option A",
+                                "prompt": "Do you prefer conventional or extreme sports? Explain your answer.",
+                                "targetWords": 120
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "2014-2015-opcion-a-second-life",
+                    "readingTitle": "Second life",
+                    "year": "2014-2015",
+                    "source": "PAU Andalucía · Lengua Extranjera (Inglés) · Curso 2014-2015 · Suplente septiembre · Opción A",
+                    "reading": {
+                        "instructions": "I * COMPREHENSION (This section consists of six items combining ‘True/False’ and/or ‘Multiple Choice’ questions) (3 points)",
+                        "maxPoints": 3,
+                        "text": [
+                            "⟦1⟧I am a cardiac surgeon in a big hospital. Several years ago, I performed a high-risk heart operation on an ⟦2⟧elderly gentleman who was in his mid-seventies. The surgery appeared to be a success, but three days later the ⟦3⟧patient’s heart stopped beating. We performed a cardiopulmonary resuscitation on him for three hours and, ⟦4⟧amazingly, he was able to come back to life. In the process, however, the man suffered a brain injury. The ⟦5⟧symptoms were very unusual: he now thought he was fifty years old. During the resuscitation process he had ⟦6⟧lost more than twenty years of his life.",
+                            "⟦7⟧I followed the patient for two months, and during that time he seemed to regain about ten of those years. ⟦8⟧When I lost track of him, he was convinced that he was sixty years old. He had the strength and energy of a ⟦9⟧man twenty years younger than his chronological age.",
+                            "⟦10⟧About a year and a half later, I was playing golf with a good friend of mine. He had brought along a friend of ⟦11⟧his, and, to my surprise, he was the patient’s son-in-law. He told me that his father-in-law had died earlier that ⟦12⟧month, and he proceeded to tell me a story that I will never forget.",
+                            "⟦13⟧Before his heart surgery, my patient had been an alcoholic, a wife-abuser, and impotent for about twenty ⟦14⟧years. After his cardiac arrest and resuscitation —and the loss of twenty years of memory— he had forgotten all ⟦15⟧these things about himself. He stopped drinking. He began sleeping with his wife again and became a loving ⟦16⟧husband. This lasted for more than a year. And then, one night, he died in sleep."
+                        ],
+                        "questions": [
+                            {
+                                "id": "q1",
+                                "type": "multiple_choice",
+                                "prompt": "After the resuscitation process the patient…",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "thought he was much younger."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "thought he was back in the 1920’s."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "could not remember anything at all."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "looked younger."
+                                    }
+                                ],
+                                "correct": "a",
+                                "group": "CHOOSE AND WRITE THE CORRECT OPTION (A, B, C or D). (0.5 points each)"
+                            },
+                            {
+                                "id": "q2",
+                                "type": "multiple_choice",
+                                "prompt": "After his loss of memory, the elderly man...",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "became sleepless."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "turned forgetful."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "was impotent."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "gave up alcohol."
+                                    }
+                                ],
+                                "correct": "d"
+                            },
+                            {
+                                "id": "q3",
+                                "type": "true_false_justify",
+                                "prompt": "During the surgery the patient’s brain got damaged.",
+                                "points": 0.5,
+                                "correct": false,
+                                "acceptedLines": [
+                                    "2-4"
+                                ],
+                                "officialAnswer": "FALSE (lines 2-4) “The surgery appeared to be a success, but three days later the patient’s heart stopped beating. We performed a cardiopulmonary resuscitation on him for three hours... In the process, however, the man suffered a brain injury.”",
+                                "group": "ARE THESE STATEMENTS TRUE OR FALSE? JUSTIFY YOUR ANSWERS WITH THE PRECISE WORDS OR PHRASES FROM THE TEXT (0.5 points each)"
+                            },
+                            {
+                                "id": "q4",
+                                "type": "true_false_justify",
+                                "prompt": "After the whole incident the patient was physically stronger.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "8-9"
+                                ],
+                                "officialAnswer": "TRUE (lines 8-9) “He had the strength and energy of a man twenty years younger than his chronological age.”"
+                            },
+                            {
+                                "id": "q5",
+                                "type": "true_false_justify",
+                                "prompt": "The narrator’s friend met the patient while playing golf.",
+                                "points": 0.5,
+                                "correct": false,
+                                "acceptedLines": [
+                                    "10-11"
+                                ],
+                                "officialAnswer": "FALSE (lines 10-11) “About a year and a half later, I was playing golf with a good friend of mine. He had brought along a friend of his, and, to my surprise, he was the patient’s son-in-law.”"
+                            },
+                            {
+                                "id": "q6",
+                                "type": "true_false_justify",
+                                "prompt": "A patient’s relative told the surgeon that he had recently died.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "11-12"
+                                ],
+                                "officialAnswer": "TRUE (lines 11-12) “...he was the patient’s son-in-law. He told me that his father-in-law had died earlier that month...”"
+                            }
+                        ]
+                    },
+                    "practice": {
+                        "title": "Use of English",
+                        "instructions": "II * USE OF ENGLISH (4 points; questions 7-12, 0.25 points each; 13-17, 0.5 points each). Esta parte no puntúa en ninguna nota de la app: es práctica adicional.",
+                        "items": [
+                            {
+                                "id": "u7",
+                                "prompt": "“damage” (noun)",
+                                "group": "7. FIND IN THE TEXT ONE SYNONYM FOR:",
+                                "officialAnswer": "injury (line 4)"
+                            },
+                            {
+                                "id": "u8",
+                                "prompt": "“strength” (noun)",
+                                "group": "8. GIVE ONE OPPOSITE FOR “strength” (noun) AS IT IS USED IN THE TEXT (line 8).",
+                                "officialAnswer": "weakness"
+                            },
+                            {
+                                "id": "u9",
+                                "prompt": "“perform” (verb)",
+                                "group": "9. GIVE A NOUN WITH THE SAME ROOT AS “perform” (verb) (line 1).",
+                                "officialAnswer": "performance / performer"
+                            },
+                            {
+                                "id": "u10",
+                                "prompt": "“I have always dreamed … becoming a doctor.”",
+                                "group": "10. FILL IN THE GAP WITH A CORRECT PREPOSITION:",
+                                "officialAnswer": "of / about"
+                            },
+                            {
+                                "id": "u11",
+                                "prompt": "“a sign or an indication of disease.”",
+                                "group": "11. FIND IN THE TEXT THE WORD THAT HAS THE FOLLOWING DEFINITION:",
+                                "officialAnswer": "symptoms (line 5)"
+                            },
+                            {
+                                "id": "u12",
+                                "prompt": "“I had never seen … beautiful painting!”\nso / such / such a / rather",
+                                "group": "12. FILL IN THE GAP WITH THE CORRECT OPTION:",
+                                "officialAnswer": "such a"
+                            },
+                            {
+                                "id": "u13",
+                                "prompt": "“If she had known it was your birthday,” ...",
+                                "group": "13. COMPLETE THE FOLLOWING CONDITIONAL SENTENCE:",
+                                "officialAnswer": "… she would have bought you a present / congratulated you.\n(Tercer condicional: would + have + participio. Respuesta abierta.)"
+                            },
+                            {
+                                "id": "u14",
+                                "prompt": "“They didn’t tell us that she arrived yesterday.”",
+                                "group": "14. TURN THE FOLLOWING SENTENCE INTO THE PASSIVE VOICE:",
+                                "officialAnswer": "We weren’t told that she arrived yesterday."
+                            },
+                            {
+                                "id": "u15",
+                                "prompt": "He told his daughters: \"Don’t talk aloud because your little brother is sleeping.\"",
+                                "group": "15. TURN THE FOLLOWING SENTENCE INTO REPORTED SPEECH:",
+                                "officialAnswer": "He told his daughters not to talk aloud because their little brother was sleeping."
+                            },
+                            {
+                                "id": "u16",
+                                "prompt": "“Amy was thinking about his story for an hour.” (Subrayado: no visible en el texto extraído; deducido de la solución oficial)",
+                                "group": "16. GIVE A QUESTION FOR THE UNDERLINED WORDS:",
+                                "officialAnswer": "How long was Amy thinking about his story?"
+                            },
+                            {
+                                "id": "u17",
+                                "prompt": "“Sarah didn’t miss the wedding reception. She was ill”",
+                                "group": "17. JOIN THE FOLLOWING SENTENCES USING AN APPROPRIATE LINKER (DO NOT USE AND, BUT OR BECAUSE). MAKE CHANGES IF NECESSARY:",
+                                "officialAnswer": "Although / Even though Sarah was ill, she didn’t miss the wedding reception.\n(También válido: Sarah didn’t miss the wedding reception in spite of / despite being ill.)"
+                            }
+                        ]
+                    },
+                    "writing": {
+                        "instructions": "III * PRODUCTION (3 points)\n18. WRITE A COMPOSITION OF APPROXIMATELY 120 WORDS ABOUT THE TOPIC PROPOSED. YOU MUST FOCUS STRICTLY ON IT.",
+                        "maxPoints": 3,
+                        "tasks": [
+                            {
+                                "id": "w1",
+                                "title": "Option A",
+                                "prompt": "Would you change anything in your life (or in the way you currently live) if you could? Explain.",
+                                "targetWords": 120
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "2014-2015-opcion-b-women-warriors",
+                    "readingTitle": "Women warriors",
+                    "year": "2014-2015",
+                    "source": "PAU Andalucía · Lengua Extranjera (Inglés) · Curso 2014-2015 · Suplente septiembre · Opción B",
+                    "reading": {
+                        "instructions": "I * COMPREHENSION (This section consists of six items combining ‘True/False’ and/or ‘Multiple Choice’ questions) (3 points)",
+                        "maxPoints": 3,
+                        "text": [
+                            "⟦1⟧It is estimated that some six hundred women served during the American Civil War. They had signed ⟦2⟧up disguised as men. Hollywood has missed a significant chapter of cultural history here – or is this history ⟦3⟧ideologically too difficult to deal with? Historians have often found it hard to deal with women who do not ⟦4⟧respect gender distinctions, and nowhere is gender distinction more strongly affected than in the question ⟦5⟧of armed female fighters.",
+                            "⟦6⟧But from antiquity to modern times, there are many stories of female warriors. The best known find ⟦7⟧their way into the history books as warrior queens, rulers and leaders. They have been forced to act as ⟦8⟧any Churchill or Roosevelt: Semiramis, queen of Assyria, and Boadicea, to mention just two. Semiramis is ⟦9⟧said to have conquered Ethiopia, Egypt and much of Asia. Among her many great achievements, some ⟦10⟧also mention the building of Babylon and of its legendary Hanging Gardens, although other authors claim ⟦11⟧that the gardens had not been built in her time but long after her reign.",
+                            "⟦12⟧Boadicea was a Celtic queen who revolted against the Roman invaders of her territory after they had ⟦13⟧robbed, beaten and sold into slavery many of her people. Her story, narrated by Roman historiographer ⟦14⟧Tacitus, was nearly forgotten for many centuries and became popular during the reign of another English ⟦15⟧queen who headed an army against foreign invasion, Queen Elizabeth I. Boadicea is honoured with a ⟦16⟧statue on the Thames at Westminster Bridge, right opposite Big Ben.",
+                            "⟦17⟧Although history is quite reticent about women having significant roles in battle either as warriors or ⟦18⟧leaders, hardly a war has been fought without women soldiers in the ranks."
+                        ],
+                        "questions": [
+                            {
+                                "id": "q1",
+                                "type": "multiple_choice",
+                                "prompt": "During the American Civil War…",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "women were easily accepted as soldiers."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "men and women did not fight together."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "women fought dressed up wearing men’s clothes."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "women and men had different positions in war."
+                                    }
+                                ],
+                                "correct": "c",
+                                "group": "CHOOSE AND WRITE THE CORRECT OPTION (A, B, C or D). (0.5 points each)"
+                            },
+                            {
+                                "id": "q2",
+                                "type": "multiple_choice",
+                                "prompt": "Historians find the subject of women warriors to be a difficult topic because ...",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "gender distinctions do not exist today."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "women warriors show no respect."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "women who fight go beyond the traditional female role."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "women warriors are stronger than male warriors."
+                                    }
+                                ],
+                                "correct": "c"
+                            },
+                            {
+                                "id": "q3",
+                                "type": "multiple_choice",
+                                "prompt": "Boadicea…",
+                                "points": 0.5,
+                                "options": [
+                                    {
+                                        "id": "a",
+                                        "text": "invaded Roman land and turned Romans into slaves."
+                                    },
+                                    {
+                                        "id": "b",
+                                        "text": "reacted against Roman abuse on her people."
+                                    },
+                                    {
+                                        "id": "c",
+                                        "text": "led an army against the invasion of Queen Elizabeth I."
+                                    },
+                                    {
+                                        "id": "d",
+                                        "text": "had a statue made by Tacitus."
+                                    }
+                                ],
+                                "correct": "b"
+                            },
+                            {
+                                "id": "q4",
+                                "type": "true_false_justify",
+                                "prompt": "Hollywood movies have been often inspired by historical women warriors.",
+                                "points": 0.5,
+                                "correct": false,
+                                "acceptedLines": [
+                                    "2"
+                                ],
+                                "officialAnswer": "FALSE (lines 2) “Hollywood has missed a significant chapter of cultural history here...”",
+                                "group": "ARE THESE STATEMENTS TRUE OR FALSE? JUSTIFY YOUR ANSWERS WITH THE PRECISE WORDS OR PHRASES FROM THE TEXT (0.5 points each)"
+                            },
+                            {
+                                "id": "q5",
+                                "type": "true_false_justify",
+                                "prompt": "There is disagreement over queen Semiramis’s role in the building of Babylon’s Hanging Gardens.",
+                                "points": 0.5,
+                                "correct": true,
+                                "acceptedLines": [
+                                    "9-11"
+                                ],
+                                "officialAnswer": "TRUE (lines 9-11) “Among her many great achievements, some also mention the building of Babylon and of its legendary Hanging Gardens, although other authors claim that the gardens had not been built in her time but long after her reign.”"
+                            },
+                            {
+                                "id": "q6",
+                                "type": "true_false_justify",
+                                "prompt": "Many wars have been fought with no women soldiers in their armies.",
+                                "points": 0.5,
+                                "correct": false,
+                                "acceptedLines": [
+                                    "18"
+                                ],
+                                "officialAnswer": "FALSE (lines 18) “...hardly a war has been fought without women soldiers in the ranks.”"
+                            }
+                        ]
+                    },
+                    "practice": {
+                        "title": "Use of English",
+                        "instructions": "II * USE OF ENGLISH (4 points; questions 7-12, 0.25 points each; 13-17, 0.5 points each). Esta parte no puntúa en ninguna nota de la app: es práctica adicional.",
+                        "items": [
+                            {
+                                "id": "u7",
+                                "prompt": "“to be in charge of, to lead others”",
+                                "group": "7. FIND IN THE TEXT ONE WORD THAT HAS THE FOLLOWING DEFINITION:",
+                                "officialAnswer": "head / headed (line 15)"
+                            },
+                            {
+                                "id": "u8",
+                                "prompt": "“She let them …… (win) the war.”",
+                                "group": "8. FILL IN THE GAP WITH A CORRECT FORM OF THE VERB IN BRACKETS:",
+                                "officialAnswer": "win"
+                            },
+                            {
+                                "id": "u9",
+                                "prompt": "“lose” (verb)",
+                                "group": "9. GIVE A NOUN WITH THE SAME ROOT AS:",
+                                "officialAnswer": "loss / loser"
+                            },
+                            {
+                                "id": "u10",
+                                "prompt": "happy / trendy / hardly / lucky",
+                                "group": "10. WHICH WORD IS NOT AN ADJECTIVE?",
+                                "officialAnswer": "hardly"
+                            },
+                            {
+                                "id": "u11",
+                                "prompt": "“relevant” (adjective)",
+                                "group": "11. FIND IN THE TEXT ONE SYNONYM FOR:",
+                                "officialAnswer": "significant (line 2 / line 17)"
+                            },
+                            {
+                                "id": "u12",
+                                "prompt": "“I never go to the gym .... the week”\nat / during / in / on",
+                                "group": "12. FILL IN THE GAP WITH THE CORRECT OPTION:",
+                                "officialAnswer": "during"
+                            },
+                            {
+                                "id": "u13",
+                                "prompt": "better · men · considered · than · always · women · have · been",
+                                "group": "13. USE THE WORDS IN THE BOXES TO MAKE A MEANINGFUL SENTENCE. USE ALL AND ONLY THE WORDS IN THE BOXES WITHOUT CHANGING THEIR FORM:",
+                                "officialAnswer": "Men have always been considered better than women.\n(También válido: Women have always been considered better than men.)"
+                            },
+                            {
+                                "id": "u14",
+                                "prompt": "“Two builders are repairing the broken wall.”",
+                                "group": "14. TURN THE FOLLOWING SENTENCE INTO THE PASSIVE VOICE:",
+                                "officialAnswer": "The broken wall is being repaired by two builders."
+                            },
+                            {
+                                "id": "u15",
+                                "prompt": "Six hundred women served during the American Civil War. (Subrayado: no visible en el texto extraído; deducido de la solución oficial)",
+                                "group": "15. GIVE A QUESTION FOR THE UNDERLINED WORDS:",
+                                "officialAnswer": "How many women served during the American Civil War?"
+                            },
+                            {
+                                "id": "u16",
+                                "prompt": "“That’s the travel agent’s. I booked my holiday tickets there.”",
+                                "group": "16. JOIN THE FOLLOWING SENTENCES USING A RELATIVE. MAKE CHANGES IF NECESSARY:",
+                                "officialAnswer": "That’s the travel agent’s where / in which I booked my holiday tickets."
+                            },
+                            {
+                                "id": "u17",
+                                "prompt": "“If women had ruled the world, …”",
+                                "group": "17. COMPLETE THE FOLLOWING CONDITIONAL SENTENCE:",
+                                "officialAnswer": "… there would have been fewer wars.\n(Tercer condicional: would + have + participio. Respuesta abierta.)"
+                            }
+                        ]
+                    },
+                    "writing": {
+                        "instructions": "III * PRODUCTION (3 points)\n18. WRITE A COMPOSITION OF APPROXIMATELY 120 WORDS ABOUT THE TOPIC PROPOSED. YOU MUST FOCUS STRICTLY ON IT.",
+                        "maxPoints": 3,
+                        "tasks": [
+                            {
+                                "id": "w1",
+                                "title": "Option B",
+                                "prompt": "Do you think women and men have the same opportunities in life?",
+                                "targetWords": 120
                             }
                         ]
                     }
