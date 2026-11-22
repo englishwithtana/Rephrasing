@@ -26850,6 +26850,8 @@
 
                 // Orden de Práctica Global
                 this.globalOrder = GLOBAL_PAU_MIXED.map((_, idx) => idx);
+                this.globalPage = 0;
+                this.globalPageSize = 20;
 
                 // Estado temporal para Simulacro Rápido (10)
                 this.examQuestions = [];
@@ -27159,11 +27161,42 @@
                     [arr[i], arr[j]] = [arr[j], arr[i]];
                 }
                 this.globalOrder = arr;
+                this.globalPage = 0;
                 this.render();
+            }
+
+            setGlobalPage(n) {
+                this.globalPage = n;
+                this.render();
+                const c = document.getElementById('app-container');
+                if (c) c.scrollIntoView({ block: 'start' });
+                window.scrollTo({ top: 0 });
+            }
+
+            renderGlobalPager(page, pages, total, from, to) {
+                if (pages <= 1) return '';
+                const nums = [];
+                for (let i = 0; i < pages; i++) {
+                    if (i === 0 || i === pages - 1 || Math.abs(i - page) <= 1) nums.push(i);
+                    else if (nums[nums.length - 1] !== '…') nums.push('…');
+                }
+                const btn = 'min-w-9 h-9 px-2.5 rounded-lg text-xs font-bold border transition flex items-center justify-center';
+                return `
+                    <nav class="gp-pager flex flex-wrap items-center justify-between gap-3 my-4" aria-label="Paginación de frases">
+                        <span class="text-xs font-semibold text-slate-500">Frases ${from}–${to} de ${total} · Página ${page + 1} de ${pages}</span>
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <button type="button" aria-label="Página anterior" ${page === 0 ? 'disabled' : ''} onclick="app.setGlobalPage(${page - 1})" class="${btn} bg-white text-slate-700 border-slate-200 ${page === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-slate-50'}">&lsaquo;</button>
+                            ${nums.map(n => n === '…'
+                                ? '<span class="px-1 text-slate-400 text-xs">…</span>'
+                                : `<button type="button" ${n === page ? 'aria-current="page"' : ''} onclick="app.setGlobalPage(${n})" class="${btn} ${n === page ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">${n + 1}</button>`).join('')}
+                            <button type="button" aria-label="Página siguiente" ${page === pages - 1 ? 'disabled' : ''} onclick="app.setGlobalPage(${page + 1})" class="${btn} bg-white text-slate-700 border-slate-200 ${page === pages - 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-slate-50'}">&rsaquo;</button>
+                        </div>
+                    </nav>`;
             }
 
             setGlobalFilter(filter) {
                 this.globalFilter = filter;
+                this.globalPage = 0;
                 this.persistNow();
                 this.render();
             }
@@ -29068,6 +29101,14 @@
                     return true;
                 });
 
+                const gpSize = this.globalPageSize || 20;
+                const gpPages = Math.max(1, Math.ceil(filteredExercises.length / gpSize));
+                if (this.globalPage >= gpPages) this.globalPage = gpPages - 1;
+                if (this.globalPage < 0) this.globalPage = 0;
+                const gpStart = this.globalPage * gpSize;
+                const pageExercises = filteredExercises.slice(gpStart, gpStart + gpSize);
+                const gpPagerHtml = this.renderGlobalPager(this.globalPage, gpPages, filteredExercises.length, gpStart + 1, gpStart + pageExercises.length);
+
                 return `
                     <div class="fade-in max-w-4xl mx-auto">
                         <button onclick="app.goHome()" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-600 hover:text-indigo-600 mb-4 transition">
@@ -29138,13 +29179,14 @@
                             </button>
                         </div>
 
+                        ${gpPagerHtml}
                         <div class="space-y-5">
                             ${filteredExercises.length === 0 ? `
                                 <div class="bg-white rounded-2xl border border-slate-200 p-10 text-center">
                                     <p class="text-slate-600 font-medium text-sm mb-3">No hay frases en este filtro actualmente.</p>
                                     <button onclick="app.setGlobalFilter('all')" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold">Mostrar las ${GLOBAL_PAU_MIXED.length} frases</button>
                                 </div>
-                            ` : filteredExercises.map((ex, displayIdx) => {
+                            ` : pageExercises.map((ex, displayIdx) => {
                                 const isDone = !!this.progress.globalCompleted[ex.id];
                                 const isFailed = !!this.progress.globalFailed[ex.id];
                                 const isRevealed = !!this.progress.globalRevealed[ex.id];
@@ -29161,7 +29203,7 @@
                                     <div id="gp-card-${ex.id}" class="bg-white rounded-2xl p-5 sm:p-6 shadow-xs border-2 ${borderClass} transition-all">
                                         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                                             <div class="flex items-center gap-2">
-                                                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Frase ${displayIdx + 1} de ${stats.total}</span>
+                                                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Frase ${gpStart + displayIdx + 1} de ${stats.total}</span>
                                                 <span id="gp-cat-badge-${ex.id}">
                                                     ${showCategory ? `<span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">${ex.category}</span>` : ''}
                                                 </span>
@@ -29266,6 +29308,7 @@
                                 `;
                             }).join('')}
                         </div>
+                        ${gpPagerHtml}
                     </div>
                 `;
             }
