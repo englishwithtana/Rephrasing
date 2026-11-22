@@ -31246,7 +31246,10 @@
                 name = String(name || '').trim();
                 if (!name) return;
                 const r = await this.admin({ action: 'create_student', name });
-                if (!(r.ok && r.json && r.json.code)) { this.toast('No se pudo crear el alumno.', true); return; }
+                if (!(r.ok && r.json && r.json.code)) {
+                    const why = r.status === 0 ? 'Sin conexión con el servidor.' : r.status === 403 ? 'Tu sesión no tiene permisos de profesora.' : r.status === 401 ? 'Sesión caducada: vuelve a entrar.' : 'Error del servidor (' + r.status + (r.json && r.json.detail ? ': ' + r.json.detail : '') + ').';
+                    this.toast('No se pudo crear el alumno. ' + why, true); return;
+                }
                 await this.reload(true);
                 this.showCode(r.json.name, r.json.code, true);
             },
