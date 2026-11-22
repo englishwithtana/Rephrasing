@@ -31103,6 +31103,7 @@
                     <header class="pv-t-head">
                         <div><div class="pv-brand">Rephrasing Master</div><h1 class="pv-t-h1">Panel de la profesora</h1></div>
                         <div class="pv-t-actions">
+                            <button type="button" class="pv-btn pv-btn-primary" id="pvt-app">Ver la app y el contenido</button>
                             <button type="button" class="pv-btn pv-btn-ghost" id="pvt-refresh">Actualizar</button>
                             <button type="button" class="pv-btn pv-btn-ghost" id="pvt-logout">Salir</button>
                         </div>
@@ -31152,6 +31153,7 @@
                 const $ = s => this.rootEl.querySelector(s);
                 $('#pvt-logout').onclick = () => PV.logout('Has cerrado sesión.');
                 $('#pvt-refresh').onclick = () => this.reload();
+                $('#pvt-app').onclick = () => this.openApp();
                 $('#pvt-new').onsubmit = (e) => { e.preventDefault(); this.createStudent($('#pvt-name').value); };
                 const search = $('#pvt-search');
                 search.oninput = () => {
@@ -31165,6 +31167,31 @@
                     el.onclick = () => this.openDetail(el.dataset.id);
                     el.onkeydown = (e) => { if (e.key === 'Enter') this.openDetail(el.dataset.id); };
                 });
+            },
+
+            // La profesora puede recorrer la app y todo el contenido (espacio propio, sin seguimiento ni envío de datos)
+            openApp() {
+                const id = PV.session.user.id;
+                window.PV_CTX = { teacher: true, student: { id, name: 'Profesora' }, storageKey: 'selectividad_rephrasing_permanent_v4__teacher_' + id, dbName: 'RephrasingMasterPAU_DB__teacher_' + id };
+                this.rootEl.style.display = 'none';
+                document.body.classList.remove('auth-pending');
+                if (!app) app = new RephrasingApp();
+                else { app.render(); app.updateHeaderStats(); }
+                if (!document.getElementById('pv-user')) {
+                    const hdr = document.getElementById('header-progress-text');
+                    const host = hdr.closest('.flex.items-center.gap-2\\.5') || hdr.parentElement.parentElement;
+                    const box = document.createElement('div');
+                    box.id = 'pv-user'; box.className = 'pv-userchip';
+                    box.innerHTML = '<span class="pv-userchip-name">Vista de profesora</span><button type="button" class="pv-userchip-btn" id="pv-back">Volver al panel</button>';
+                    host.insertBefore(box, host.firstChild);
+                    document.getElementById('pv-back').addEventListener('click', () => this.backToPanel());
+                }
+                window.scrollTo(0, 0);
+            },
+            backToPanel() {
+                document.body.classList.add('auth-pending');
+                this.rootEl.style.display = '';
+                this.reload(true);
             },
 
             // Búsqueda por código: se resuelve en el servidor (los códigos no se guardan en claro)
