@@ -28360,6 +28360,45 @@
             toolong: 'Más de una oración', nocopy: 'No es una copia exacta del texto', wrongplace: 'No corresponde al fragmento que justifica la respuesta', ok: 'Copia exacta correcta'
         };
 
+        /* "FIND IN THE TEXT" (A7/A8): cada apartado (7.1, 7.2, 8.1, 8.2) tiene su propia casilla y se corrige solo.
+           Las respuestas válidas salen de la solución oficial de cada apartado: «intention(s) (line 6)» -> intention / intentions;
+           «a / b» -> a o b. Si algún apartado no se puede interpretar con seguridad, la pregunta se queda en corrección manual. */
+        function rwOpenParts(q) {
+            if (q._rwParts !== undefined) return q._rwParts;
+            q._rwParts = null;
+            if (q.type !== 'open' || !q.officialAnswer) return null;
+            const label = /^\s*(\d+\.\d+)\.\s*(.*)$/;
+            const prompts = {}, order = [];
+            String(q.prompt).split('\n').forEach(l => { const m = l.match(label); if (m) { prompts[m[1]] = m[2]; order.push(m[1]); } });
+            const answers = {};
+            String(q.officialAnswer).split('\n').forEach(l => { const m = l.match(label); if (m) answers[m[1]] = m[2]; });
+            if (order.length < 2 || order.some(k => !answers[k])) return null;
+            const parts = [];
+            for (const k of order) {
+                const raw = answers[k].replace(/\((?:lines?|line)[^)]*\)/gi, ' ').replace(/\s+/g, ' ').trim();
+                const alts = raw.split(/\s*(?:\/|,|;)\s*/).map(a => a.trim()).filter(Boolean);
+                if (!alts.length) return null;
+                const variants = new Set();
+                for (const alt of alts) {
+                    let combos = [''];
+                    alt.split(' ').forEach(tok => {
+                        const m = tok.match(/^([^()]+)\(([^()]+)\)$/);
+                        const opts = m ? [m[1], m[1] + m[2]] : [tok];
+                        combos = combos.flatMap(c => opts.map(o => (c ? c + ' ' : '') + o));
+                    });
+                    combos.forEach(c => variants.add(c.toLowerCase().replace(/[’‘]/g, "'").trim()));
+                }
+                if ([...variants].some(v => /[()\d]/.test(v) || !v)) return null;
+                parts.push({ key: k, prompt: prompts[k], variants: [...variants], official: raw });
+            }
+            q._rwParts = parts;
+            return parts;
+        }
+        function rwOpenPartOk(part, text) {
+            const t = String(text == null ? '' : text).toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim().replace(/^["“'‘]+|["”'’.,;:!?]+$/g, '').trim();
+            return !!t && part.variants.includes(t);
+        }
+
         function rwQuestionIsAuto(q) {
             if (q.type === 'true_false_justify') return typeof q.correct === 'boolean' && Array.isArray(q.acceptedLines) && q.acceptedLines.length > 0;
             if (q.type === 'multiple_choice') return typeof q.correct === 'string';
@@ -29722,7 +29761,17 @@
                 exam.reading.questions.forEach(q => {
                     const ans = answers[q.id];
                     if (ans !== undefined && ans !== null && String(ans).trim() !== '') res.answered++;
-                    if (q.type === 'true_false_justify' && rwQuestionIsAuto(q)) {
+                    const oparts = rwOpenParts(q);
+                    const legacyOpen = !!oparts && rec && rec.manualPoints && typeof rec.manualPoints[q.id] === 'number'
+                        && !oparts.some((pt, i) => String(answers[q.id + '__p' + i] || '').trim());
+                    if (oparts && !legacyOpen) {
+                        const each = q.points / oparts.length;
+                        const rows = oparts.map((pt, i) => { const mine = answers[q.id + '__p' + i]; return { key: pt.key, mine: mine || '', ok: rwOpenPartOk(pt, mine), official: pt.official }; });
+                        const pts = Math.round(rows.filter(r => r.ok).length * each * 100) / 100;
+                        res.perQuestion[q.id] = { auto: true, partial: true, parts: rows, each, correct: rows.every(r => r.ok), points: pts };
+                        res.earned += pts;
+                        if (rows.some(r => String(r.mine).trim())) res.answered++;
+                    } else if (q.type === 'true_false_justify' && rwQuestionIsAuto(q)) {
                         const tfOk = (ans === 'true' || ans === 'false') && ((ans === 'true') === q.correct);
                         const jc = rwJustificationCheck(exam, q, answers[q.id + '__j']);
                         const pts = (tfOk && jc.ok) ? q.points : 0; // sin graduación: o 0,5 o 0
@@ -30305,6 +30354,10 @@
                             }
                         } else if (q.type === 'short_answer') {
                             input = `<input type="text" value="${rwEscape(ans || '')}" oninput="app.rwSetAnswer('${eid}','${q.id}',this.value)" autocomplete="off" autocapitalize="off" spellcheck="false" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Tu respuesta">`;
+                        } else if (pq && pq.parts) {
+                            input = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">${pq.parts.map((pt, pi) => `
+                                <label class="block"><span class="block text-xs font-bold text-slate-600 mb-1">${rwEscape(pt.key)}</span>
+                                <input type="text" value="${rwEscape(answers[q.id + '__p' + pi] || '')}" oninput="app.rwSetAnswer('${eid}','${q.id}__p${pi}',this.value)" autocomplete="off" autocapitalize="off" spellcheck="false" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Una palabra o expresión del texto"></label>`).join('')}</div>`;
                         } else {
                             input = `<textarea rows="${/\n/.test(q.prompt) ? 3 : 4}" oninput="app.rwSetAnswer('${eid}','${q.id}',this.value)" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Tu respuesta">${rwEscape(ans || '')}</textarea>`;
                         }
@@ -30335,6 +30388,9 @@
                         border = (typeof mp === 'number' || pq.blank) ? 'border-slate-200' : 'border-violet-200';
                     }
                     let tfjHtml = '';
+                    if (pq && pq.parts) {
+                        tfjHtml = pq.parts.map(r => `<p class="${r.ok ? 'text-emerald-700' : 'text-rose-700'}"><span class="font-bold">${r.ok ? '✓' : '✗'} ${rwEscape(r.key)}</span> <span class="text-slate-700">${r.mine && String(r.mine).trim() ? rwEscape(r.mine) : '<em class="text-slate-400">Sin responder</em>'}</span>${r.ok ? '' : ` <span class="text-slate-500">→ ${rwEscape(r.official)}</span>`} <span class="text-xs font-bold">· ${r.ok ? rwFmt(pq.each) : '0'} pts</span></p>`).join('');
+                    }
                     if (q.type === 'true_false_justify') {
                         const jTxt = answers[q.id + '__j'];
                         const mk = (ok, label) => `<span class="${ok ? 'text-emerald-700' : 'text-rose-700'}">${ok ? '✓' : '✗'} ${label}</span>`;
@@ -30345,7 +30401,7 @@
                         ${groupHtml}<div class="bg-white rounded-2xl border ${border} p-4 sm:p-5 shadow-xs">
                             ${head}
                             <div class="text-sm space-y-1.5">
-                                <p class="text-slate-700 whitespace-pre-line"><span class="font-bold text-slate-500">Tu respuesta:</span> ${mine ? rwEscape(mine) : '<em class="text-slate-400">Sin responder</em>'}</p>
+                                ${pq && pq.parts ? '' : `<p class="text-slate-700 whitespace-pre-line"><span class="font-bold text-slate-500">Tu respuesta:</span> ${mine ? rwEscape(mine) : '<em class="text-slate-400">Sin responder</em>'}</p>`}
                                 ${tfjHtml}
                                 ${official ? `<p class="text-slate-700 whitespace-pre-line"><span class="font-bold text-emerald-700">Solución oficial:</span> ${rwEscape(official)}</p>` : ''}
                             </div>
